@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach's Pub & Grill — Kitchen Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0f0f;
+    --surface: #161818;
+    --surface2: #1e2020;
+    --surface3: #252828;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8;
+    --text2: #9a9690;
+    --text3: #5c5a57;
+    --gold: #c9a84c;
+    --gold-dim: rgba(201,168,76,0.15);
+    --green: #4caf7d;
+    --green-dim: rgba(76,175,125,0.12);
+    --amber: #e09a3a;
+    --amber-dim: rgba(224,154,58,0.12);
+    --red: #e05252;
+    --red-dim: rgba(224,82,82,0.12);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --radius: 6px;
+    --radius-lg: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14,15,15,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    height: 56px;
+    gap: 2rem;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    padding: 0 1rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: var(--font-body);
+  }
+
+  .nav-tab:hover { color: var(--text2); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* MAIN */
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-sub {
+    color: var(--text2);
+    font-size: 14px;
+    max-width: 480px;
+  }
+
+  /* STAT CARDS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    position: relative;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    font-family: var(--font-mono);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 34px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 0.25rem;
+  }
+
+  .stat-green { color: var(--green); }
+  .stat-amber { color: var(--amber); }
+  .stat-red { color: var(--red); }
+  .stat-gold { color: var(--gold); }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* PANELS */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .panel-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text2);
+  }
+
+  .panel-body { padding: 1.25rem; }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* SEARCH & FILTER */
+  .toolbar {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  input[type="text"], select {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input[type="text"]:focus, select:focus { border-color: var(--gold); }
+  input[type="text"] { flex: 1; min-width: 200px; }
+  select option { background: #1a1a1a; }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    white-space: nowrap;
+  }
+
+  th.right, td.right { text-align: right; }
+
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover { background: var(--surface2); }
+
+  .td-name {
+    font-weight: 500;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .td-cat {
+    color: var(--text3);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .td-mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* FC BADGES */
+  .fc-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .fc-good { background: var(--green-dim); color: var(--green); }
+  .fc-warn { background: var(--amber-dim); color: var(--amber); }
+  .fc-bad  { background: var(--red-dim);   color: var(--red); }
+
+  /* CATEGORY BAR CHART — custom horizontal bars */
+  .cat-bars { display: flex; flex-direction: column; gap: 10px; }
+
+  .cat-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 55px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cat-label { font-size: 12px; color: var(--text2); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .cat-bar-track {
+    height: 20px;
+    background: var(--surface3);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cat-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(.22,1,.36,1);
+  }
+
+  .cat-pct {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* INGREDIENT LIST */
+  .ingredient-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .ing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    padding: 6px 10px;
+    background: var(--surface2);
+    border-radius: var(--radius);
+    gap: 1rem;
+  }
+
+  .ing-name { color: var(--text2); flex: 1; }
+  .ing-qty { color: var(--text3); font-family: var(--font-mono); font-size: 11px; }
+  .ing-cost { font-family: var(--font-mono); font-size: 11px; color: var(--gold); }
+
+  /* MODAL */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .modal-title { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.02em; line-height: 1.1; }
+  .modal-cat { font-size: 11px; color: var(--text3); margin-top: 4px; font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .modal-close {
+    background: var(--surface3);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    color: var(--text2);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .modal-close:hover { background: var(--surface3); color: var(--text); }
+
+  .modal-body { padding: 1.25rem 1.5rem; }
+
+  .modal-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-stat {
+    background: var(--surface2);
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+
+  .modal-stat-label { font-size: 10px; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .modal-stat-value { font-family: var(--font-display); font-size: 22px; }
+
+  /* INVENTORY TABLE */
+  .inv-section-header {
+    padding: 0.5rem 1rem;
+    background: var(--surface3);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* MARCH REPORT */
+  .report-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) { .report-grid { grid-template-columns: 1fr; } }
+
+  /* SPARKLINE effect */
+  .profit-bar {
+    display: inline-block;
+    height: 4px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  /* UTILITY */
+  .text-green { color: var(--green); }
+  .text-amber { color: var(--amber); }
+  .text-red   { color: var(--red); }
+  .text-gold  { color: var(--gold); }
+  .text-muted { color: var(--text3); }
+  .mb-1 { margin-bottom: 1rem; }
+  .mb-2 { margin-bottom: 2rem; }
+  .mt-1 { margin-top: 1rem; }
+  .flex { display: flex; }
+  .gap-1 { gap: 0.5rem; }
+  .items-center { align-items: center; }
+
+  .empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: var(--text3);
+    font-size: 13px;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 0.5rem;
+    display: none;
+  }
+
+  @media (max-width: 600px) { .scroll-hint { display: block; } }
+
+  /* Animated entrance */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.4s ease both; }
+  .fade-up-1 { animation-delay: 0.05s; }
+  .fade-up-2 { animation-delay: 0.1s; }
+  .fade-up-3 { animation-delay: 0.15s; }
+  .fade-up-4 { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">COACH'S PUB</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
+    <button class="nav-tab" onclick="showPage('menu')">Menu Costing</button>
+    <button class="nav-tab" onclick="showPage('march')">March Report</button>
+    <button class="nav-tab" onclick="showPage('inventory')">Inventory</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== OVERVIEW ===== -->
+<div id="page-overview" class="page active">
+  <div class="hero fade-up">
+    <div class="hero-eyebrow">Kitchen Intelligence Dashboard</div>
+    <div class="hero-title">Coach's Pub &amp; Grill</div>
+    <div class="hero-sub">Food cost tracking, recipe analysis, and inventory management — all in one place.</div>
+  </div>
+
+  <div class="stats-grid fade-up fade-up-1">
+    <div class="stat-card">
+      <div class="stat-label">Menu Items</div>
+      <div class="stat-value stat-gold" id="ov-total">91</div>
+      <div class="stat-sub">active recipes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Food Cost</div>
+      <div class="stat-value stat-green" id="ov-avgfc">—</div>
+      <div class="stat-sub">across valid recipes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Items Under 25%</div>
+      <div class="stat-value stat-green" id="ov-under25">—</div>
+      <div class="stat-sub">high-margin items</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Items Over 50%</div>
+      <div class="stat-value stat-red" id="ov-over50">—</div>
+      <div class="stat-sub">need attention</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">March Sales</div>
+      <div class="stat-value stat-gold">$87.6K</div>
+      <div class="stat-sub">gross food revenue</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">March FC Est.</div>
+      <div class="stat-value stat-green">30.3%</div>
+      <div class="stat-sub">blended food cost</div>
+    </div>
+  </div>
+
+  <div class="grid-2 fade-up fade-up-2">
+    <!-- Top performers -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Top Margin Items</div>
+        <div class="fc-badge fc-good">FC &lt; 20%</div>
+      </div>
+      <div class="panel-body">
+        <div id="top-performers"></div>
+      </div>
+    </div>
+    <!-- Needs attention -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Needs Attention</div>
+        <div class="fc-badge fc-bad">FC &gt; 50%</div>
+      </div>
+      <div class="panel-body">
+        <div id="needs-attention"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title fade-up fade-up-3">Food Cost by Category</div>
+  <div class="panel fade-up fade-up-4">
+    <div class="panel-body">
+      <div class="cat-bars" id="cat-bars-overview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MENU COSTING ===== -->
+<div id="page-menu" class="page">
+  <div class="hero">
+    <div class="hero-eyebrow">Recipe Management</div>
+    <div class="hero-title">Menu Costing</div>
+    <div class="hero-sub">91 recipes with ingredient-level food cost breakdowns.</div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="menu-search" placeholder="Search menu items..." oninput="renderMenuTable()">
+    <select id="menu-cat" onchange="renderMenuTable()">
+      <option value="">All categories</option>
+    </select>
+    <select id="menu-sort" onchange="renderMenuTable()">
+      <option value="name">Name A–Z</option>
+      <option value="fc-asc">FC% low → high</option>
+      <option value="fc-desc">FC% high → low</option>
+      <option value="profit-desc">Profit high → low</option>
+      <option value="price-desc">Price high → low</option>
+    </select>
+  </div>
+
+  <div class="scroll-hint">Scroll right to see all columns →</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Category</th>
+          <th class="right">Sell Price</th>
+          <th class="right">Food Cost</th>
+          <th class="right">Profit</th>
+          <th class="right">FC %</th>
+          <th class="right">Details</th>
+        </tr>
+      </thead>
+      <tbody id="menu-tbody"></tbody>
+    </table>
+  </div>
+  <div id="menu-empty" class="empty-state" style="display:none;">No items match your search.</div>
+</div>
+
+<!-- ===== MARCH REPORT ===== -->
+<div id="page-march" class="page">
+  <div class="hero">
+    <div class="hero-eyebrow">Period Analysis</div>
+    <div class="hero-title">March 2025 Report</div>
+    <div class="hero-sub">Estimated food cost breakdown based on product mix and recipe data.</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Gross Food Sales</div>
+      <div class="stat-value stat-gold">$87,642</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Food Cost</div>
+      <div class="stat-value stat-amber">$26,519</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Blended FC %</div>
+      <div class="stat-value stat-green">30.3%</div>
+      <div class="stat-sub">healthy range</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Gross Profit</div>
+      <div class="stat-value stat-green">$61,123</div>
+    </div>
+  </div>
+
+  <div class="report-grid">
+    <div>
+      <div class="section-title">Sales by Category</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th class="right">Sales</th>
+              <th class="right">Est. Cost</th>
+              <th class="right">FC %</th>
+              <th class="right">Share</th>
+            </tr>
+          </thead>
+          <tbody id="march-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-title" style="margin-top:2rem;">Top Selling Items</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th class="right">Qty Sold</th>
+              <th class="right">Gross Sales</th>
+            </tr>
+          </thead>
+          <tbody id="march-items-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">FC by Category</div>
+      <div class="panel">
+        <div class="panel-body">
+          <div class="cat-bars" id="march-cat-bars"></div>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:1.5rem;">Key Observations</div>
+      <div class="panel">
+        <div class="panel-body" style="display:flex;flex-direction:column;gap:12px;">
+          <div style="padding:12px;background:var(--green-dim);border-radius:var(--radius);border-left:3px solid var(--green);">
+            <div style="font-size:12px;font-weight:500;color:var(--green);margin-bottom:4px;">Strong performers</div>
+            <div style="font-size:12px;color:var(--text2);">Calzones (19%), Appetizers (20%), and Sides (23%) are highest-margin categories. Cheese Bread alone: $2,187 at ~18% FC.</div>
+          </div>
+          <div style="padding:12px;background:var(--amber-dim);border-radius:var(--radius);border-left:3px solid var(--amber);">
+            <div style="font-size:12px;font-weight:500;color:var(--amber);margin-bottom:4px;">Watch closely</div>
+            <div style="font-size:12px;color:var(--text2);">Wraps (40%), Sandwiches (36%), and Pasta (35%) are running high. Chicken protein cost is the primary driver.</div>
+          </div>
+          <div style="padding:12px;background:var(--surface2);border-radius:var(--radius);border-left:3px solid var(--border2);">
+            <div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:4px;">Data gaps</div>
+            <div style="font-size:12px;color:var(--text3);">Classic Fish Dinner (204 sold), Corned Beef, Smoked Reuben, and BYO Pizza sizes still need recipe cards to sharpen this estimate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INVENTORY ===== -->
+<div id="page-inventory" class="page">
+  <div class="hero">
+    <div class="hero-eyebrow">Supply Management</div>
+    <div class="hero-title">Inventory</div>
+    <div class="hero-sub">Current stock levels and pricing across all storage areas.</div>
+  </div>
+
+  <div class="stats-grid" id="inv-stats"></div>
+
+  <div class="toolbar" style="margin-top:1.5rem;">
+    <input type="text" id="inv-search" placeholder="Search inventory..." oninput="renderInventory()">
+    <select id="inv-section" onchange="renderInventory()">
+      <option value="">All sections</option>
+    </select>
+    <select id="inv-sort" onchange="renderInventory()">
+      <option value="name">Name A–Z</option>
+      <option value="total-desc">Total $ high</option>
+      <option value="count-asc">Count low → high</option>
+    </select>
+  </div>
+
+  <div class="scroll-hint">Scroll right to see all columns →</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Section</th>
+          <th>Pack Size</th>
+          <th class="right">Count</th>
+          <th class="right">Unit Price</th>
+          <th class="right">Total Value</th>
+        </tr>
+      </thead>
+      <tbody id="inv-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<!-- RECIPE MODAL -->
+<div class="modal-backdrop" id="recipe-modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title">—</div>
+        <div class="modal-cat" id="modal-cat">—</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('recipe-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <div class="modal-stat-label">Sell Price</div>
+          <div class="modal-stat-value text-gold" id="modal-price">—</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">Food Cost</div>
+          <div class="modal-stat-value" id="modal-cost">—</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label">FC %</div>
+          <div class="modal-stat-value" id="modal-fc">—</div>
+        </div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">Ingredients</div>
+      <div class="ingredient-list" id="modal-ingredients"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const MENU_DATA = [{"name":"Alfredo Pasta","category":"Pastas","sell_price":9.99,"cost":3.7439,"profit":6.2461,"food_cost_pct":"37.48%","ingredients":[{"ingredient":"Pasta Penne Rigate WG Bulk","qty":8,"unit":"Ounces","ext_cost":0.8872},{"ingredient":"Sauce Alfredo Cheese Four GF","qty":6,"unit":"Ounces","ext_cost":1.7328},{"ingredient":"Side Salad","qty":1,"unit":"Serving","ext_cost":1.1234}]},{"name":"Alfredo Pasta - Shrimp","category":"Pastas","sell_price":13.99,"cost":6.3392,"profit":7.6508,"food_cost_pct":"45.31%","ingredients":[{"ingredient":"Alfredo Pasta","qty":1,"unit":"Serving","ext_cost":3.7439},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"Alfredo Pasta Chicken","category":"Pastas","sell_price":11.99,"cost":14.6813,"profit":-2.6913,"food_cost_pct":"122.45%","ingredients":[{"ingredient":"Alfredo Pasta","qty":1,"unit":"Serving","ext_cost":3.7439},{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375}]},{"name":"Alfredo Pasta Salmon","category":"Pastas","sell_price":14.99,"cost":7.8348,"profit":7.1552,"food_cost_pct":"52.27%","ingredients":[{"ingredient":"Alfredo Pasta","qty":1,"unit":"Serving","ext_cost":3.7439},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"Balsamic Chicken","category":"Hall of Famers","sell_price":14.99,"cost":13.6452,"profit":1.3448,"food_cost_pct":"91.03%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Dressing Metro Balsamic Vinaigrette","qty":3,"unit":"Fluid Ounces","ext_cost":0.3669},{"ingredient":"Gravy Beef Roasted","qty":3,"unit":"Ounces","ext_cost":0.258},{"ingredient":"Potatoes Mashed Garlic Redskin","qty":8,"unit":"Ounces","ext_cost":0.9592},{"ingredient":"Side Salad","qty":1,"unit":"Serving","ext_cost":1.1234}]},{"name":"Barbacoa Burrito","category":"Mexican League","sell_price":13.99,"cost":4.0467,"profit":9.9433,"food_cost_pct":"28.93%","ingredients":[{"ingredient":"Beef Pot Roast Cooked","qty":5,"unit":"Ounces","ext_cost":2.4375},{"ingredient":"Dip Queso Poblano","qty":6,"unit":"Ounces","ext_cost":1.0824},{"ingredient":"salsa recipe","qty":2,"unit":"Fluid Ounces","ext_cost":0.2004},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Basket of Fries","category":"Kick Off","sell_price":6.99,"cost":1.3889,"profit":5.6011,"food_cost_pct":"19.87%","ingredients":[{"ingredient":"Fry Straight 5/16 Skin On","qty":9,"unit":"Ounces","ext_cost":1.1133},{"ingredient":"Ketchup Upside Down Squeeze Btl","qty":3,"unit":"Ounces","ext_cost":0.2757}]},{"name":"Basket of Onion Rings","category":"Kick Off","sell_price":7.99,"cost":2.1158,"profit":5.8742,"food_cost_pct":"26.48%","ingredients":[{"ingredient":"Onion Ring 1/2 Battered Golden Dipt","qty":8,"unit":"Ounces","ext_cost":1.9728},{"ingredient":"Ranch Recipe","qty":2,"unit":"Ounces","ext_cost":0.1432}]},{"name":"Basket of Sweet Potato Fries","category":"Kick Off","sell_price":8.99,"cost":1.424,"profit":7.566,"food_cost_pct":"15.84%","ingredients":[{"ingredient":"Fry Sweet Potato 5/16  SC","qty":7,"unit":"Ounces","ext_cost":1.281},{"ingredient":"Ranch Recipe","qty":2,"unit":"Ounces","ext_cost":0.1432}]},{"name":"Basket of Tots","category":"Kick Off","sell_price":6.99,"cost":1.6163,"profit":5.3737,"food_cost_pct":"23.12%","ingredients":[{"ingredient":"Ketchup Upside Down Squeeze Btl","qty":3,"unit":"Ounces","ext_cost":0.2757},{"ingredient":"Potato Tater Tots Tatergem RS","qty":10,"unit":"Ounces","ext_cost":1.341}]},{"name":"Battered Mozz sticks","category":"Kick Off","sell_price":11.99,"cost":2.3204,"profit":9.6696,"food_cost_pct":"19.35%","ingredients":[{"ingredient":"Mozzarella Stick Breaded 3.25\"","qty":6,"unit":"Pieces","ext_cost":2.1486},{"ingredient":"Ranch","qty":3,"unit":"Fluid Ounces","ext_cost":0.1719}]},{"name":"BBQ Chix Pizza 12\"","category":"Pizza","sell_price":17.99,"cost":5.7523,"profit":12.2377,"food_cost_pct":"31.98%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":2.56,"unit":"Ounces","ext_cost":1.184},{"ingredient":"Cheese Shred Four Blend Pizza","qty":10,"unit":"Ounces","ext_cost":1.459},{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907}]},{"name":"BBQ Chix Pizza 16\"","category":"Pizza","sell_price":21.99,"cost":9.9357,"profit":12.0543,"food_cost_pct":"45.18%","ingredients":[{"ingredient":"Bacon Topping FC 1/2","qty":4.8,"unit":"Ounces","ext_cost":2.2027},{"ingredient":"Cheese Shred Four Blend Pizza","qty":19,"unit":"Ounces","ext_cost":2.7721},{"ingredient":"Dough Ball Pizza 19 oz","qty":1,"unit":"Piece","ext_cost":1.3773}]},{"name":"BBQ Chix Pizza 7\"","category":"Pizza","sell_price":13.99,"cost":2.9847,"profit":11.0053,"food_cost_pct":"21.33%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":1.28,"unit":"Ounces","ext_cost":0.592},{"ingredient":"Cheese Four Blend Pizza Shred","qty":5,"unit":"Ounces","ext_cost":0.7295},{"ingredient":"Dough Ball Pizza 13 oz","qty":0.5,"unit":"Piece","ext_cost":0.4954}]},{"name":"Beef Shepard's Pie","category":"Hall of Famers","sell_price":14.99,"cost":3.912,"profit":11.078,"food_cost_pct":"26.10%","ingredients":[{"ingredient":"Beef Pot Roast Cooked","qty":5,"unit":"Ounces","ext_cost":2.309},{"ingredient":"Cheese Cheddar Shred Fine","qty":1.5,"unit":"Ounces","ext_cost":0.227},{"ingredient":"Corn Whole Kernel Fancy DOMESTIC","qty":3,"unit":"Ounces","ext_cost":0.2262},{"ingredient":"Gravy Beef Roasted","qty":5,"unit":"Ounces","ext_cost":0.43},{"ingredient":"Potatoes Mashed Garlic Redskin","qty":6,"unit":"Ounces","ext_cost":0.7194}]},{"name":"Beef Taco Salad","category":"Salads","sell_price":11.99,"cost":3.2918,"profit":8.6982,"food_cost_pct":"27.45%","ingredients":[{"ingredient":"Beef Taco Meat Prep","qty":4,"unit":"Ounces","ext_cost":1.1364},{"ingredient":"Lettuce Shred 1/8\"","qty":5,"unit":"Ounces","ext_cost":0.8925},{"ingredient":"Olives Black Ripe Sliced","qty":1,"unit":"Ounce","ext_cost":0.1093},{"ingredient":"Tomatoes Value Pack #2","qty":2,"unit":"Ounces","ext_cost":0.4092},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Beef Tacos","category":"Mexican League","sell_price":9.99,"cost":3.3896,"profit":6.6004,"food_cost_pct":"33.93%","ingredients":[{"ingredient":"Beef Taco Meat Prep","qty":5,"unit":"Ounces","ext_cost":1.4205},{"ingredient":"Cheese Cheddar Shred Fine","qty":3,"unit":"Ounces","ext_cost":0.4539},{"ingredient":"Tortilla Flour 6\"","qty":2,"unit":"Pieces","ext_cost":0.19}]},{"name":"Beef Wet Burrito","category":"Mexican League","sell_price":12.99,"cost":4.3643,"profit":8.6257,"food_cost_pct":"33.60%","ingredients":[{"ingredient":"Beef Taco Meat Prep","qty":6,"unit":"Ounces","ext_cost":1.7046},{"ingredient":"Cheese Cheddar Fine Shred","qty":3,"unit":"Ounces","ext_cost":0.4539},{"ingredient":"Sauce Enchilada","qty":6,"unit":"Ounces","ext_cost":0.5454},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Big House Salad","category":"Salads","sell_price":9.99,"cost":2.4397,"profit":7.5503,"food_cost_pct":"24.42%","ingredients":[{"ingredient":"Cheese Cheddar Shred Fine","qty":2,"unit":"Ounces","ext_cost":0.3026},{"ingredient":"Eggs Hard Cooked Vac Pack","qty":1,"unit":"Piece","ext_cost":0.3144},{"ingredient":"Lettuce Romaine Blend","qty":4.5,"unit":"Ounces","ext_cost":0.8285},{"ingredient":"Tomatoes XLrg 5x6 Bulk Pack","qty":2,"unit":"Ounces","ext_cost":0.517}]},{"name":"Big House Salad w/ Chix","category":"Salads","sell_price":15.49,"cost":13.3771,"profit":2.1129,"food_cost_pct":"86.36%","ingredients":[{"ingredient":"Big House Salad","qty":1,"unit":"Serving","ext_cost":2.4397},{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375}]},{"name":"Big House Salad w/ Salmon","category":"Salads","sell_price":17.99,"cost":6.5306,"profit":11.4594,"food_cost_pct":"36.30%","ingredients":[{"ingredient":"Big House Salad","qty":1,"unit":"Serving","ext_cost":2.4397},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"Big House Salad w/ Shrimp","category":"Salads","sell_price":16.49,"cost":5.035,"profit":11.455,"food_cost_pct":"30.53%","ingredients":[{"ingredient":"Big House Salad","qty":1,"unit":"Serving","ext_cost":2.4397},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"BLT Salmon Wrap","category":"Handhelds","sell_price":14.99,"cost":6.1963,"profit":8.7937,"food_cost_pct":"41.34%","ingredients":[{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Boneless Wings","category":"Winning Baskets","sell_price":12.99,"cost":3.592,"profit":9.398,"food_cost_pct":"27.65%","ingredients":[{"ingredient":"Chix Wing Bnls Brd H/Style FC 1 oz","qty":8,"unit":"Ounces","ext_cost":1.668},{"ingredient":"Fry Straight 5/16 Skin On","qty":7,"unit":"Ounces","ext_cost":0.8659}]},{"name":"Bread Sticks","category":"Kick Off","sell_price":5.99,"cost":1.9145,"profit":4.0755,"food_cost_pct":"31.96%","ingredients":[{"ingredient":"Dough Ball Pizza 16 oz","qty":1,"unit":"Piece","ext_cost":1.572},{"ingredient":"Pizza Sauce Recipe","qty":3,"unit":"Ounces","ext_cost":0.1719}]},{"name":"Buffalo Tots","category":"Tots","sell_price":10.99,"cost":2.113,"profit":8.877,"food_cost_pct":"19.23%","ingredients":[{"ingredient":"Cheese Bleu Crumbles","qty":1.5,"unit":"Ounces","ext_cost":0.3396},{"ingredient":"Potato Tater Tots Tatergem","qty":8,"unit":"Ounces","ext_cost":1.0728},{"ingredient":"Sauce Buffalo Wing Red Hot","qty":3,"unit":"Fluid Ounces","ext_cost":0.3984}]},{"name":"Caesar Salad","category":"Salads","sell_price":8.99,"cost":2.1081,"profit":6.8819,"food_cost_pct":"23.45%","ingredients":[{"ingredient":"Croutons Butter Garlic Homestyle Ju","qty":0.5,"unit":"Ounce","ext_cost":0.0938},{"ingredient":"Dressing Caesar PC GF","qty":2,"unit":"Pieces","ext_cost":0.7794},{"ingredient":"Lettuce Romaine Blend","qty":5,"unit":"Ounces","ext_cost":0.9205}]},{"name":"Caesar Salad w/ Chix","category":"Salads","sell_price":14.49,"cost":13.0455,"profit":1.4445,"food_cost_pct":"90.03%","ingredients":[{"ingredient":"Caesar Salad","qty":1,"unit":"Serving","ext_cost":2.1081},{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375}]},{"name":"Caesar salad w/ salmon","category":"Salads","sell_price":16.99,"cost":6.199,"profit":10.791,"food_cost_pct":"36.49%","ingredients":[{"ingredient":"Caesar Salad","qty":1,"unit":"Serving","ext_cost":2.1081},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"Caesar Salad w/ Shrimp","category":"Salads","sell_price":15.49,"cost":4.7034,"profit":10.7866,"food_cost_pct":"30.36%","ingredients":[{"ingredient":"Caesar Salad","qty":1,"unit":"Serving","ext_cost":2.1081},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"Cheese Bread","category":"Kick Off","sell_price":12.99,"cost":2.3273,"profit":10.6627,"food_cost_pct":"17.92%","ingredients":[{"ingredient":"Cheese Shred Four Blend Pizza","qty":7,"unit":"Ounces","ext_cost":1.0213},{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Pizza Sauce Recipe","qty":3,"unit":"Fluid Ounces","ext_cost":0.1719}]},{"name":"Cheese Pizza 12\"","category":"Pizza","sell_price":12.99,"cost":2.493,"profit":10.497,"food_cost_pct":"19.19%","ingredients":[{"ingredient":"Cheese Shred Four Blend Pizza","qty":8,"unit":"Ounces","ext_cost":1.1672},{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Pizza Sauce Recipe","qty":8,"unit":"Fluid Ounces","ext_cost":0.4584}]},{"name":"Cheese Pizza 16\"","category":"Pizza","sell_price":15.99,"cost":3.7614,"profit":12.2286,"food_cost_pct":"23.52%","ingredients":[{"ingredient":"Cheese Shred Four Blend Pizza","qty":13,"unit":"Ounces","ext_cost":1.8967},{"ingredient":"Dough Ball Pizza 19 oz","qty":1,"unit":"Piece","ext_cost":1.3773},{"ingredient":"Pizza Sauce Recipe","qty":12,"unit":"Fluid Ounces","ext_cost":0.6876}]},{"name":"Cheese Pizza 7\"","category":"Pizza","sell_price":7.99,"cost":1.2465,"profit":6.7435,"food_cost_pct":"15.60%","ingredients":[{"ingredient":"Cheese Shred Four Blend Pizza","qty":4,"unit":"Ounces","ext_cost":0.5836},{"ingredient":"Dough Ball Pizza 13 oz","qty":0.5,"unit":"Piece","ext_cost":0.4954},{"ingredient":"Pizza Sauce Recipe","qty":4,"unit":"Fluid Ounces","ext_cost":0.2292}]},{"name":"Cheese Quesadilla","category":"Mexican League","sell_price":7.99,"cost":1.9531,"profit":6.0369,"food_cost_pct":"24.44%","ingredients":[{"ingredient":"Cheese Cheddar Shred Fine","qty":5,"unit":"Ounces","ext_cost":0.7565},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Cheeseburger Tots","category":"Tots","sell_price":13.99,"cost":4.9164,"profit":9.0736,"food_cost_pct":"35.14%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":2,"unit":"Ounces","ext_cost":0.925},{"ingredient":"Beef Taco Meat Prep","qty":3,"unit":"Ounces","ext_cost":0.8523},{"ingredient":"Potato Tater Tots Tatergem","qty":8,"unit":"Ounces","ext_cost":1.0728}]},{"name":"Chef Salad","category":"Salads","sell_price":12.99,"cost":4.3882,"profit":8.6018,"food_cost_pct":"33.78%","ingredients":[{"ingredient":"Ham Buffet Slcd 1oz WA Smkd","qty":2,"unit":"Ounces","ext_cost":0.7052},{"ingredient":"Lettuce Romaine Blend","qty":3,"unit":"Ounces","ext_cost":0.5523},{"ingredient":"Turkey Breast Petite Oven Roasted S","qty":2,"unit":"Ounces","ext_cost":0.6092}]},{"name":"Cherry Chicken Wrap","category":"Handhelds","sell_price":14.99,"cost":14.9423,"profit":0.0477,"food_cost_pct":"99.68%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Nuts Walnuts Halves & Pieces","qty":1.5,"unit":"Ounces","ext_cost":0.9036},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Chicken Club","category":"Handhelds","sell_price":14.99,"cost":14.7415,"profit":0.2485,"food_cost_pct":"98.34%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Naan Teardrop Original","qty":1,"unit":"Piece","ext_cost":1.0246}]},{"name":"Chicken Quesadilla","category":"Mexican League","sell_price":9.99,"cost":11.6475,"profit":-1.6575,"food_cost_pct":"116.59%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":6,"unit":"Ounces","ext_cost":9.375},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Chicken Taco Salad","category":"Salads","sell_price":11.99,"cost":15.2455,"profit":-3.2555,"food_cost_pct":"127.15%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":8,"unit":"Ounces","ext_cost":12.5},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Chicken Tacos","category":"Mexican League","sell_price":9.99,"cost":8.627,"profit":1.363,"food_cost_pct":"86.36%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":4,"unit":"Ounces","ext_cost":6.25},{"ingredient":"Tortilla Flour 6\"","qty":2,"unit":"Pieces","ext_cost":0.2812}]},{"name":"Chicken Tender Basket","category":"Winning Baskets","sell_price":13.99,"cost":3.8451,"profit":10.1449,"food_cost_pct":"27.48%","ingredients":[{"ingredient":"Chix Tender Pre-Brn RTC Crispy Lish","qty":7.25,"unit":"Ounces","ext_cost":2.2105},{"ingredient":"Fry Straight 5/16 Skin On","qty":7,"unit":"Ounces","ext_cost":0.8659}]},{"name":"Chicken Wet Burrito","category":"Mexican League","sell_price":12.99,"cost":11.6422,"profit":1.3478,"food_cost_pct":"89.62%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":6,"unit":"Ounces","ext_cost":9.375},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Chicken Wrap","category":"Handhelds","sell_price":14.99,"cost":13.8767,"profit":1.1133,"food_cost_pct":"92.57%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Tortilla Flour 12\"","qty":1,"unit":"Piece","ext_cost":0.3263}]},{"name":"Chips and Salsa","category":"Kick Off","sell_price":6.99,"cost":0.8722,"profit":6.1178,"food_cost_pct":"12.48%","ingredients":[{"ingredient":"Chips Tortilla Yellow Raw 4 Way","qty":4,"unit":"Ounces","ext_cost":0.2712},{"ingredient":"salsa recipe","qty":6,"unit":"Fluid Ounces","ext_cost":0.6012}]},{"name":"Coach's Burger","category":"Burgers","sell_price":13.99,"cost":4.6344,"profit":9.3556,"food_cost_pct":"33.13%","ingredients":[{"ingredient":"Beef Ground 80/20 Fine Fresh Lean","qty":7,"unit":"Ounces","ext_cost":2.2694},{"ingredient":"Bun Honey Butter 5","qty":1,"unit":"Serving","ext_cost":0.6302},{"ingredient":"Fry Straight 5/16 Skin On","qty":7,"unit":"Ounces","ext_cost":0.8659}]},{"name":"Fajita Salad","category":"Salads","sell_price":8.99,"cost":3.8224,"profit":5.1676,"food_cost_pct":"42.52%","ingredients":[{"ingredient":"Cheese Cheddar Shred Fine","qty":2,"unit":"Ounces","ext_cost":0.3026},{"ingredient":"Lettuce Shred 1/8\"","qty":6,"unit":"Ounces","ext_cost":1.071}]},{"name":"Fajita Salad w/ chicken","category":"Salads","sell_price":14.49,"cost":14.7598,"profit":-0.2698,"food_cost_pct":"101.86%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Fajita Salad","qty":1,"unit":"Serving","ext_cost":3.8224}]},{"name":"Fajita Salad w/ Salmon","category":"Salads","sell_price":16.99,"cost":7.9133,"profit":9.0767,"food_cost_pct":"46.58%","ingredients":[{"ingredient":"Fajita Salad","qty":1,"unit":"Serving","ext_cost":3.8224},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"Fajita salad w/ shrimp","category":"Salads","sell_price":15.49,"cost":6.4177,"profit":9.0723,"food_cost_pct":"41.43%","ingredients":[{"ingredient":"Fajita Salad","qty":1,"unit":"Serving","ext_cost":3.8224},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"Fish & Chips Basket","category":"Winning Baskets","sell_price":14.99,"cost":4.9067,"profit":10.0833,"food_cost_pct":"32.73%","ingredients":[{"ingredient":"Fry Straight 5/16 Skin On","qty":7,"unit":"Ounces","ext_cost":0.8659},{"ingredient":"Pollock Loin 4oz 2x IQF","qty":9,"unit":"Ounces","ext_cost":3.0861}]},{"name":"Garlic Parm Tots","category":"Tots","sell_price":9.99,"cost":1.8795,"profit":8.1105,"food_cost_pct":"18.81%","ingredients":[{"ingredient":"Cheese Parmesan Blend Grated","qty":1.5,"unit":"Ounces","ext_cost":0.4622},{"ingredient":"Potato Tater Tots Tatergem","qty":8,"unit":"Ounces","ext_cost":1.0728}]},{"name":"Gouda Mac Curds","category":"Kick Off","sell_price":12.99,"cost":3.418,"profit":9.572,"food_cost_pct":"26.31%","ingredients":[{"ingredient":"Mac & Cheese Bite Smk Gouda & Bacon","qty":14,"unit":"Pieces","ext_cost":2.8406},{"ingredient":"Sauce Boom Boom GF","qty":3.25,"unit":"Fluid Ounces","ext_cost":0.5775}]},{"name":"Grilled Ham and Cheese","category":"Handhelds","sell_price":10.99,"cost":3.8232,"profit":7.1668,"food_cost_pct":"34.79%","ingredients":[{"ingredient":"Ham Buffet Slcd 1oz WA Smkd","qty":5,"unit":"Ounces","ext_cost":1.763},{"ingredient":"Bread Deli White 3/4","qty":2,"unit":"Servings","ext_cost":0.7002}]},{"name":"Hawaiian 16\"","category":"Pizza","sell_price":21.99,"cost":9.6169,"profit":12.3731,"food_cost_pct":"43.73%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":4.8,"unit":"Ounces","ext_cost":2.22},{"ingredient":"Dough Ball Pizza 19 oz","qty":1,"unit":"Piece","ext_cost":1.3773},{"ingredient":"Pineapple Tidbits Pizza in Lite Syr","qty":9.92,"unit":"Ounces","ext_cost":1.6904}]},{"name":"Hawaiian 7\"","category":"Pizza","sell_price":13.99,"cost":2.6016,"profit":11.3884,"food_cost_pct":"18.60%","ingredients":[{"ingredient":"Dough Ball Pizza 13 oz","qty":0.5,"unit":"Piece","ext_cost":0.4954},{"ingredient":"Pineapple Tidbits Pizza in Lite Syr","qty":1.92,"unit":"Ounces","ext_cost":0.3272}]},{"name":"Hawaiin 12\"","category":"Pizza","sell_price":17.99,"cost":5.4538,"profit":12.5362,"food_cost_pct":"30.32%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":2.56,"unit":"Ounces","ext_cost":1.184},{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Pineapple Tidbits Pizza in Lite Syr","qty":4.8,"unit":"Ounces","ext_cost":0.8179}]},{"name":"Hot Roast Beef","category":"Hall of Famers","sell_price":13.99,"cost":4.3251,"profit":9.6649,"food_cost_pct":"30.92%","ingredients":[{"ingredient":"Beef Pot Roast Cooked","qty":5,"unit":"Ounces","ext_cost":2.309},{"ingredient":"Potatoes Mashed Garlic Redskin","qty":6,"unit":"Ounces","ext_cost":0.7194}]},{"name":"Italian Calzone","category":"Calzones","sell_price":14.99,"cost":3.0487,"profit":11.9413,"food_cost_pct":"20.34%","ingredients":[{"ingredient":"Cheese Shred Four Blend Pizza","qty":4,"unit":"Ounces","ext_cost":0.5836},{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Pepperoni Sliced 44mm 16/oz","qty":12,"unit":"Pieces","ext_cost":0.2292}]},{"name":"Italian Grinder","category":"Grinders","sell_price":12.99,"cost":4.2071,"profit":8.7829,"food_cost_pct":"32.39%","ingredients":[{"ingredient":"Ham Buffet Slcd 1oz WA Smkd","qty":2,"unit":"Ounces","ext_cost":0.7052},{"ingredient":"Roll Baguette White Sandwich","qty":1,"unit":"Piece","ext_cost":0.8329},{"ingredient":"Salami Sliced Hard","qty":1,"unit":"Ounce","ext_cost":0.3587}]},{"name":"Large Nacho - Beef","category":"Mexican League","sell_price":14.99,"cost":6.6426,"profit":8.3474,"food_cost_pct":"44.31%","ingredients":[{"ingredient":"Beef Taco Meat Prep","qty":7,"unit":"Ounces","ext_cost":1.9887},{"ingredient":"Chips Tortilla YLW Raw 4 Way","qty":8,"unit":"Ounces","ext_cost":0.5424}]},{"name":"Large Nacho Chicken","category":"Mexican League","sell_price":14.99,"cost":15.4472,"profit":-0.4572,"food_cost_pct":"103.05%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Chips Tortilla YLW Raw 4 Way","qty":8,"unit":"Ounces","ext_cost":0.5424}]},{"name":"Loaded Tots","category":"Tots","sell_price":11.99,"cost":2.6826,"profit":9.3074,"food_cost_pct":"22.37%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":2.5,"unit":"Ounces","ext_cost":1.1563},{"ingredient":"Potato Tater Tots Tatergem","qty":8,"unit":"Ounces","ext_cost":1.0728}]},{"name":"Meat Lovers 12\"","category":"Pizza","sell_price":17.99,"cost":5.6843,"profit":12.3057,"food_cost_pct":"31.60%","ingredients":[{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Sausage Topping Italian Old World","qty":4.48,"unit":"Ounces","ext_cost":1.318}]},{"name":"Meat Lovers 16\"","category":"Pizza","sell_price":21.99,"cost":11.288,"profit":10.702,"food_cost_pct":"51.33%","ingredients":[{"ingredient":"Dough Ball Pizza 19 oz","qty":1,"unit":"Piece","ext_cost":1.3773},{"ingredient":"Sausage Topping Italian FC Pizza","qty":8.64,"unit":"Ounces","ext_cost":3.4309}]},{"name":"Meat Lovers 7\"","category":"Pizza","sell_price":13.99,"cost":2.8273,"profit":11.1627,"food_cost_pct":"20.21%","ingredients":[{"ingredient":"Dough Ball Pizza 13 oz","qty":0.5,"unit":"Piece","ext_cost":0.4954},{"ingredient":"Sausage Topping Italian Old World","qty":1.92,"unit":"Ounces","ext_cost":0.5649}]},{"name":"Meat Lovers Calzone","category":"Calzones","sell_price":16.99,"cost":3.107,"profit":13.883,"food_cost_pct":"18.29%","ingredients":[{"ingredient":"Dough Ball Pizza 13 oz","qty":1,"unit":"Piece","ext_cost":0.9907},{"ingredient":"Pepperoni Sliced 44mm 16/oz","qty":12,"unit":"Pieces","ext_cost":0.2292}]},{"name":"MI Cherry Salad","category":"Salads","sell_price":10.99,"cost":3.3287,"profit":7.6613,"food_cost_pct":"30.29%","ingredients":[{"ingredient":"Cherries Red Dried","qty":1.5,"unit":"Ounces","ext_cost":0.8235},{"ingredient":"Lettuce Romaine Blend","qty":2.5,"unit":"Ounces","ext_cost":0.4603},{"ingredient":"Nuts Walnuts Halves & Pieces","qty":1.5,"unit":"Ounces","ext_cost":0.9036}]},{"name":"MI Cherry Salad w/ chicken","category":"Salads","sell_price":15.49,"cost":14.2661,"profit":1.2239,"food_cost_pct":"92.10%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"MI Cherry Salad","qty":1,"unit":"Serving","ext_cost":3.3287}]},{"name":"MI Cherry Salad w/ Salmon","category":"Salads","sell_price":18.99,"cost":7.4196,"profit":11.5704,"food_cost_pct":"39.07%","ingredients":[{"ingredient":"MI Cherry Salad","qty":1,"unit":"Serving","ext_cost":3.3287},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"MI Cherry Salad w/ shrimp","category":"Salads","sell_price":17.49,"cost":5.924,"profit":11.566,"food_cost_pct":"33.87%","ingredients":[{"ingredient":"MI Cherry Salad","qty":1,"unit":"Serving","ext_cost":3.3287},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"Mushroom Swiss Burger","category":"Burgers","sell_price":13.99,"cost":5.1322,"profit":8.8578,"food_cost_pct":"36.68%","ingredients":[{"ingredient":"Coach's Burger","qty":1,"unit":"Serving","ext_cost":4.6344},{"ingredient":"Mushroom Prep","qty":2.5,"unit":"Ounces","ext_cost":0.427}]},{"name":"Perch Dinner","category":"Hall of Famers","sell_price":14.99,"cost":5.9479,"profit":9.0421,"food_cost_pct":"39.68%","ingredients":[{"ingredient":"Fry Straight 5/16 Skin On","qty":7,"unit":"Ounces","ext_cost":0.8659},{"ingredient":"Pike Perch/Zander S/On 40/60gr IQF","qty":3,"unit":"Pieces","ext_cost":3.6735}]},{"name":"Perch Taco","category":"Handhelds","sell_price":14.99,"cost":6.238,"profit":8.752,"food_cost_pct":"41.61%","ingredients":[{"ingredient":"Pike Perch/Zander S/On 40/60gr IQF","qty":150,"unit":"Grams","ext_cost":4.17},{"ingredient":"Tortilla Flour 6\"","qty":2,"unit":"Pieces","ext_cost":0.19}]},{"name":"Philly Grinder","category":"Grinders","sell_price":13.99,"cost":4.2532,"profit":9.7368,"food_cost_pct":"30.40%","ingredients":[{"ingredient":"Beef Steak EZ 4oz","qty":4,"unit":"Ounces","ext_cost":1.7364},{"ingredient":"Roll Baguette White Sandwich","qty":1,"unit":"Piece","ext_cost":0.8329}]},{"name":"Potato Skins","category":"Kick Off","sell_price":12.99,"cost":3.7405,"profit":9.2495,"food_cost_pct":"28.80%","ingredients":[{"ingredient":"Bacon Topping FC 3/8","qty":3,"unit":"Ounces","ext_cost":1.3875},{"ingredient":"Cheese Cheddar Shred Fine","qty":6,"unit":"Ounces","ext_cost":0.9078},{"ingredient":"Potatoes Baker 70 Ct","qty":3,"unit":"Pieces","ext_cost":1.0941}]},{"name":"Pretzel Logs","category":"Kick Off","sell_price":12.99,"cost":3.6827,"profit":9.3073,"food_cost_pct":"28.35%","ingredients":[{"ingredient":"Dip Queso Poblano","qty":4,"unit":"Ounces","ext_cost":0.7216},{"ingredient":"Pretzel Stick Soft Bavarian","qty":4,"unit":"Pieces","ext_cost":2.9612}]},{"name":"Pub Pickle","category":"Kick Off","sell_price":11.99,"cost":2.1559,"profit":9.8341,"food_cost_pct":"17.98%","ingredients":[{"ingredient":"Pickle Chips Battered","qty":7,"unit":"Ounces","ext_cost":2.0412}]},{"name":"Queso Dip","category":"Kick Off","sell_price":12.99,"cost":1.8768,"profit":11.1132,"food_cost_pct":"14.45%","ingredients":[{"ingredient":"Beef Taco Meat Prep","qty":2,"unit":"Ounces","ext_cost":0.5682},{"ingredient":"Chips Tortilla YLW Raw 4 Way","qty":6,"unit":"Ounces","ext_cost":0.4068},{"ingredient":"Dip Queso Poblano","qty":5,"unit":"Ounces","ext_cost":0.902}]},{"name":"Salmon Plate","category":"Salads","sell_price":16.99,"cost":6.1738,"profit":10.8162,"food_cost_pct":"36.34%","ingredients":[{"ingredient":"Potatoes Mashed Garlic Redskin","qty":8,"unit":"Ounces","ext_cost":0.9592},{"ingredient":"Salmon Norw Atl Fillet C/C 6 oz","qty":6,"unit":"Ounces","ext_cost":4.0908}]},{"name":"Shrimp Caesar","category":"Salads","sell_price":15.49,"cost":5.4828,"profit":10.0072,"food_cost_pct":"35.40%","ingredients":[{"ingredient":"Caesar Salad","qty":1,"unit":"Serving","ext_cost":2.1081},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956}]},{"name":"Shrimp Dinner","category":"Hall of Famers","sell_price":16.99,"cost":5.9941,"profit":10.9959,"food_cost_pct":"35.28%","ingredients":[{"ingredient":"Potatoes Mashed Garlic Redskin","qty":6,"unit":"Ounces","ext_cost":0.7194},{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":9,"unit":"Pieces","ext_cost":3.8934}]},{"name":"Shrimp Tacos","category":"Handhelds","sell_price":14.99,"cost":4.3077,"profit":10.6823,"food_cost_pct":"28.74%","ingredients":[{"ingredient":"Shrimp PDTon 16/20 Wht Raw IQF","qty":6,"unit":"Pieces","ext_cost":2.5956},{"ingredient":"Tortilla Flour 6\"","qty":2,"unit":"Pieces","ext_cost":0.19}]},{"name":"Small Nacho","category":"Kick Off","sell_price":9.99,"cost":4.1298,"profit":5.8602,"food_cost_pct":"41.34%","ingredients":[{"ingredient":"Beef Ground 80/20 Fine Fresh Lean","qty":5,"unit":"Ounces","ext_cost":1.621},{"ingredient":"Chips Tortilla YLW Raw 4 Way","qty":5,"unit":"Ounces","ext_cost":0.339}]},{"name":"Smitty Burger","category":"Burgers","sell_price":14.99,"cost":5.3316,"profit":9.6584,"food_cost_pct":"35.57%","ingredients":[{"ingredient":"Coach's Burger","qty":1,"unit":"Serving","ext_cost":4.6344},{"ingredient":"Sauce BBQ Sweet & Spicy","qty":1,"unit":"Fluid Ounce","ext_cost":0.1329}]},{"name":"Smothered Chicken","category":"Hall of Famers","sell_price":14.99,"cost":12.9428,"profit":2.0472,"food_cost_pct":"86.34%","ingredients":[{"ingredient":"Chix Breast Jumbo Bnls/SL Random CV","qty":7,"unit":"Ounces","ext_cost":10.9375},{"ingredient":"Mushroom Prep","qty":2.5,"unit":"Ounces","ext_cost":0.427}]},{"name":"Spinach and Artichoke Dip","category":"Kick Off","sell_price":12.99,"cost":2.0115,"profit":10.9785,"food_cost_pct":"15.49%","ingredients":[{"ingredient":"Chips Tortilla Yellow Raw 4 Way","qty":6,"unit":"Ounces","ext_cost":0.4068},{"ingredient":"Spin Dip Prep","qty":7,"unit":"Ounces","ext_cost":1.2971}]},{"name":"Supreme 7\"","category":"Pizza","sell_price":13.99,"cost":4.6183,"profit":9.3717,"food_cost_pct":"33.01%","ingredients":[{"ingredient":"Cheese Four Blend Pizza Shred","qty":5,"unit":"Ounces","ext_cost":0.7295},{"ingredient":"Dough Ball Pizza 13 oz","qty":0.5,"unit":"Piece","ext_cost":0.4954}]},{"name":"Turkey Grinder","category":"Grinders","sell_price":12.99,"cost":4.8729,"profit":8.1171,"food_cost_pct":"37.51%","ingredients":[{"ingredient":"Roll Baguette White Sandwich","qty":1,"unit":"Piece","ext_cost":0.8329},{"ingredient":"Turkey Sliced Bread Ready","qty":5,"unit":"Ounces","ext_cost":2.1265}]},{"name":"White Cheddar Mac","category":"Pastas","sell_price":11.99,"cost":3.9929,"profit":7.9971,"food_cost_pct":"33.30%","ingredients":[{"ingredient":"Pasta Penne Rigate WG Bulk","qty":8,"unit":"Ounces","ext_cost":0.8872},{"ingredient":"Sauce Alfredo Cheese Four GF","qty":4,"unit":"Ounces","ext_cost":1.1552}]}];
+
+const INVENTORY_DATA = [
+  {section:"Walk In Cooler",items:[{name:"Peppers Jalapeno",pack:"1/5 lb",count:0.8,price:27.58},{name:"Cilantro",pack:"4/1 Lb",count:0.25,price:20},{name:"Celery Pascal",pack:"1/6 Ct",count:1.5,price:57.34},{name:"Bun Honey Butter 5\"",pack:"1/64 ct",count:0.75,price:40.33},{name:"Bread Deli White 3/4\"",pack:"1/6 ct",count:0.66,price:82.07},{name:"Sour Cream Real",pack:"4/5 lb",count:1.25,price:15.08},{name:"Oranges Choice California",pack:"1/12 ct",count:1,price:26.27},{name:"Lemons Choice",pack:"1/48 ct",count:1,price:33.23},{name:"Limes",pack:"1/48 ct",count:0.9,price:33.23},{name:"Onions Red Jumbo",pack:"1/5 lb",count:0.5,price:13.26},{name:"Cucumbers 24 Ct",pack:"1/24 ct",count:0.8,price:36.12},{name:"Peppers Green Choice",pack:"1/20 lb",count:0.5,price:57.03},{name:"Mayonnaise Heavy Duty",pack:"4/1 gal",count:0.7,price:46.02},{name:"Lettuce Romaine Blend",pack:"4/5 lb",count:2,price:28.54},{name:"Lettuce Shredded 1/4\"",pack:"4/5 lb",count:0.6,price:24.89},{name:"Tomatoes Value Pack #2",pack:"1/25 lb",count:0.1,price:81.83},{name:"Onions Yellow Jumbo",pack:"1/25 lb",count:1.2,price:23.4},{name:"Beef Pot Roast Cooked",pack:"2/7-10 lb.",count:2.6,price:119.34},{name:"Beef Ground 80/20 Fine Fresh Lean",pack:"8/10 lb",count:1,price:36.75},{name:"Bacon 14/18 Platter 30#",pack:"1/30 lb",count:0.5,price:169.98},{name:"Potatoes Mashed Garlic Redskin",pack:"4/5 lb",count:1,price:38.38},{name:"Cheese Bleu Crumbles",pack:"4/5 lb",count:1.2,price:72.65},{name:"Cheese Mozz Muen Prov Shred",pack:"4/5 lb",count:2,price:47.18},{name:"Cheese Cheddar Fine Shred",pack:"4/5 lb",count:0.75,price:48.63},{name:"Sliced Ham",pack:"",count:1.5,price:67.7},{name:"Sliced Turkey",pack:"",count:0.66,price:67.7},{name:"Random Chix Breasts",pack:"",count:2.5,price:82.61}]},
+  {section:"Prep Area",items:[{name:"Oil Olive 51-49 EVOO/Canola Blend",pack:"1/10 lt",count:0.5,price:90.57},{name:"Seasoning Montreal Steak",pack:"1/29 oz",count:0.6,price:18.46},{name:"Spice Pepper Cayenne",pack:"1/14 oz",count:0.8,price:17.39},{name:"Spice Garlic Powder",pack:"6/21 oz",count:0.1,price:21.2},{name:"Seasoning Lemon Pepper",pack:"6/28 oz",count:0.3,price:19.87},{name:"Spice Nutmeg Ground",pack:"1/16 oz",count:0.8,price:36.03},{name:"Spice Pepper Crushed Red",pack:"1/13 oz",count:1,price:14.85},{name:"Spice Cumin Ground",pack:"1/14 oz",count:0.6,price:21.18},{name:"Seasoning Cajun",pack:"1/18 oz",count:0.7,price:22.4},{name:"Seasoning Fajita Marinade",pack:"1/30 oz",count:1,price:16.76},{name:"Spice Paprika",pack:"1/18 oz",count:1,price:14.99},{name:"Nuts Walnuts Halves & Pieces",pack:"1/5 lb",count:0.6,price:48.19},{name:"Cherries Red Dried",pack:"1/3 lb",count:0.9,price:26.35},{name:"Seasoning Taco",pack:"6/9 oz",count:0.7,price:18},{name:"White Pepper",pack:"",count:0.8,price:43.02},{name:"Garlic Romano",pack:"",count:1,price:15.33}]},
+  {section:"Kitchen",items:[{name:"Chips Kettle Salt Pepper Onion",pack:"40/1.375 oz",count:1.8,price:26.78},{name:"Crackers Saltines",pack:"500/2 ct",count:0.4,price:31.14},{name:"Croutons Butter Garlic Homestyle",pack:"4/2.5 lb",count:0.75,price:30},{name:"Applesauce Unsweetened Cups",pack:"72/4 oz",count:0.6,price:41.43},{name:"Dressing Caesar Table Side",pack:"4/1 gal",count:0.1,price:26.5}]},
+  {section:"Dry Storage",items:[{name:"Sauce Honey Sriracha",pack:"4/0.5 gal",count:0.5,price:52.93},{name:"Sauce Buffalo Wing Red Hot",pack:"4/1 gal",count:0.85,price:67.99},{name:"Sauce Enchilada",pack:"4/1 gal",count:1.1,price:46.53},{name:"Sauce Sweet Chili",pack:"4/0.5 gal",count:0.8,price:62.63},{name:"Sauce Nashville Hot",pack:"4/0.5 gal",count:0.5,price:54.99},{name:"Sauce Garlic Parmesan",pack:"2/1 gal",count:0.5,price:44.14},{name:"Sauce Tartar New England Style",pack:"4/1 gal",count:1.25,price:73.01},{name:"Dressing Italian Golden ESS",pack:"4/1 gal",count:0.5,price:57.52},{name:"Oil Soybean Salad",pack:"6/1 gal",count:1,price:67.99},{name:"Tomatoes Ground Peeled Tom Magic",pack:"6/10 cans",count:1.33,price:37.29},{name:"Tomatoes Diced Salsa Style Escalon",pack:"6/10 cans",count:1.33,price:41.75},{name:"Olives Black Ripe Sliced",pack:"6/10 cans",count:0.6,price:62.96},{name:"Dressing French California (RED)",pack:"4/1 gal",count:0.5,price:61.76},{name:"Pasta Penne Rigate Bulk",pack:"2/10 lb",count:0.4,price:35.5},{name:"Mayonnaise Real Squeeze",pack:"12/20 oz",count:1.5,price:94.02},{name:"Flour Hi Gluten Bouncer",pack:"2/25 lb",count:0.5,price:24.21},{name:"Bread Crumbs Plain Med",pack:"1/15 lb",count:0.8,price:34.3},{name:"Mix Batter Crispy Fry",pack:"4/12.5 lb",count:0.5,price:56.75},{name:"Gravy Beef Roasted",pack:"12/50 oz",count:0.66,price:51.61},{name:"Fryer Oil Shortening",pack:"",count:3.25,price:39.4},{name:"Bourbon Sauce",pack:"",count:1.2,price:80.33},{name:"Pizza Sauce",pack:"",count:0.7,price:46.95},{name:"Refried Beans",pack:"",count:1.2,price:64.56}]},
+  {section:"Freezer",items:[{name:"Fry Straight 5/16 Skin On",pack:"6/5 lb",count:3.33,price:59.37},{name:"Naan Teardrop Original",pack:"6/8 ct",count:1,price:49.18},{name:"Crust Cauliflower GF 10\" Seasoned",pack:"24/5.2 oz",count:0.6,price:64.9},{name:"Beef Steak EZ 4oz",pack:"1/10 lb",count:1,price:69.445},{name:"Shrimp Panko Crusted 26/34ct",pack:"4/2.5 lb",count:1,price:76.57},{name:"Salmon Norw Atl Fillet C/C 6 oz",pack:"1/10 lb",count:0.4,price:109.09},{name:"Pollock Fillet 2-4 oz Alaskan",pack:"1/25 lb",count:1,price:85.54},{name:"Chix Wing Bnls Brd H/Style FC 1 oz",pack:"1/10 lb",count:2.1,price:37.36},{name:"Chix Tender Pre-Brn RTC Crispy",pack:"1/10 lb",count:2,price:48.79},{name:"Vegetable Blend Tuscan",pack:"8/3 lb",count:0.5,price:45.74},{name:"Pepperoni Sliced 44mm 16/oz",pack:"2/12.5 lb",count:1,price:122.44},{name:"Sausage Topping Italian Old World",pack:"2/5 lb",count:1,price:47.07},{name:"Bacon Topping FC 3/8",pack:"2/5 lb",count:0.7,price:74},{name:"Pork Carnitas FC",pack:"6/5 lb avg",count:0.85,price:145},{name:"Soup Mama Chicken Noodle RTU",pack:"4/4 lb",count:1.25,price:45.93},{name:"Ice Cream Vanilla",pack:"1/3 gal",count:0.8,price:60},{name:"Mozzarella Stick Breaded 3.25\"",pack:"6/4 lb",count:0.33,price:137.5},{name:"Mac & Cheese Bite Smk Gouda & Bacon",pack:"6/2 lb",count:1.5,price:77.91},{name:"Fry Sweet Potato 5/16\" SC",pack:"6/2.5 lb",count:2.25,price:43.91},{name:"Pretzel Stick Soft Bavarian",pack:"72/2.4 oz",count:1.1,price:53.3},{name:"Onion Ring 5/8 Beer Batt Thick",pack:"6/2.5 lb",count:1.3,price:60.5},{name:"Potato Tater Tots",pack:"6/5 lb",count:0.7,price:50.2},{name:"Beyond Burgers",pack:"",count:1,price:135.42},{name:"Bone In Wings",pack:"",count:1.6,price:55.69},{name:"Pickle Chips Battered",pack:"",count:2,price:55.69}]},
+  {section:"Pop Rack",items:[{name:"BIB Syrup Pepsi Cola 5gal",pack:"1/5 gal",count:1,price:115.95},{name:"BIB Syrup Mountain Dew 5gal",pack:"1/5 gal",count:0.7,price:115.95},{name:"BIB Syrup Root Beer MUG 5gal",pack:"1/5 gal",count:1.1,price:115.95},{name:"BIB Syrup Lemonade Yellow",pack:"1/5 gal",count:1.1,price:115.95},{name:"BIB Syrup Dr Pepper 5gal",pack:"1/5 gal",count:1,price:115.95},{name:"BIB Diet Pepsi",pack:"",count:1,price:115.95}]}
+];
+
+const MARCH_CATS = [
+  {cat:'Burgers',sales:12545,cost:4289,fc:34.2},
+  {cat:'Appetizers',sales:10499,cost:2121,fc:20.2},
+  {cat:'Pizza',sales:10451,cost:3032,fc:29.0},
+  {cat:'Mexican',sales:8848,cost:2891,fc:32.7},
+  {cat:'Wings',sales:6582,cost:1825,fc:27.7},
+  {cat:'Entrees',sales:6316,cost:2086,fc:33.0},
+  {cat:'Salads',sales:4908,cost:1439,fc:29.3},
+  {cat:'Fish dinners',sales:4632,cost:1590,fc:34.3},
+  {cat:'Grinders',sales:4497,cost:1447,fc:32.2},
+  {cat:'Specials',sales:4016,cost:1325,fc:33.0},
+  {cat:'Sandwiches',sales:3106,cost:1118,fc:36.0},
+  {cat:'Pasta',sales:2165,cost:763,fc:35.3},
+  {cat:'Sides',sales:2237,cost:522,fc:23.3},
+  {cat:'Chicken baskets',sales:2243,cost:616,fc:27.5},
+  {cat:'Wraps',sales:2343,cost:937,fc:40.0},
+  {cat:'Calzones',sales:1260,cost:245,fc:19.4},
+  {cat:'Kids',sales:804,cost:225,fc:28.0},
+  {cat:'Soup',sales:191,cost:48,fc:25.0},
+];
+
+const MARCH_ITEMS = [
+  {name:"Coach's Burger",qty:220,gross:3335.47},{name:"Classic Fish Dinner",qty:204,gross:3267.26},{name:"Bacon Cheeseburger",qty:167,gross:2815.05},{name:"Tacos",qty:213,gross:2756.33},{name:"Boneless Wing Basket",qty:187,gross:2550.86},{name:"Chicken Strips Basket",qty:152,gross:2243.30},{name:"Cheese Bread",qty:164,gross:2187.53},{name:"Wing Basket",qty:137,gross:2162.39},{name:"Olive Burger",qty:140,gross:2113.69},{name:"Supreme",qty:100,gross:1814.51},{name:"Nachos",qty:138,gross:1821.62},{name:"Smoked Reuben & Fries",qty:93,gross:1704.49},{name:"Perch Dinner",qty:105,gross:1578.95},{name:"Barbacoa Burrito",qty:111,gross:1563.94},{name:"Wet Burrito",qty:114,gross:1497.11},{name:"Hot Roast Beef Sandwich",qty:103,gross:1462.47},{name:"Mushroom Swiss Burger",qty:93,gross:1402.22},{name:"Traditional Wings",qty:99,gross:1400.66},{name:"Philly Grinder",qty:93,gross:1389.98},{name:"Fish & Chips Basket",qty:87,gross:1364.47}
+];
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+function fcColor(pct) {
+  const n = parseFloat(pct);
+  if (n > 50)  return 'fc-bad';
+  if (n > 30)  return 'fc-warn';
+  return 'fc-good';
+}
+
+function fcBarColor(pct) {
+  if (pct > 50) return '#e05252';
+  if (pct > 30) return '#e09a3a';
+  return '#4caf7d';
+}
+
+function money(v) {
+  return '$' + Math.abs(v).toFixed(2);
+}
+
+function fcPct(item) {
+  return parseFloat(item.food_cost_pct);
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============================================================
+// OVERVIEW
+// ============================================================
+
+function initOverview() {
+  const valid = MENU_DATA.filter(d => d.sell_price > 0 && d.food_cost_pct);
+  const fcVals = valid.map(d => fcPct(d));
+  const avg = fcVals.reduce((a,b)=>a+b,0) / fcVals.length;
+  const under25 = fcVals.filter(v => v < 25).length;
+  const over50 = fcVals.filter(v => v > 50).length;
+
+  document.getElementById('ov-total').textContent = MENU_DATA.length;
+  document.getElementById('ov-avgfc').textContent = avg.toFixed(1) + '%';
+  document.getElementById('ov-under25').textContent = under25;
+  document.getElementById('ov-over50').textContent = over50;
+
+  // Top performers (lowest FC%)
+  const sorted = [...valid].sort((a,b) => fcPct(a) - fcPct(b));
+  const topEl = document.getElementById('top-performers');
+  topEl.innerHTML = sorted.slice(0,8).map(item => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;">${item.name}</div>
+      <span class="fc-badge ${fcColor(item.food_cost_pct)}">${item.food_cost_pct}</span>
+    </div>`).join('') + '<div style="padding:8px 0;font-size:11px;color:var(--text3);">Click Menu Costing for full list</div>';
+
+  // Needs attention (highest FC%)
+  const worst = [...valid].filter(d => fcPct(d) > 50).sort((a,b) => fcPct(b) - fcPct(a));
+  const attEl = document.getElementById('needs-attention');
+  attEl.innerHTML = worst.slice(0,8).map(item => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;">${item.name}</div>
+      <span class="fc-badge ${fcColor(item.food_cost_pct)}">${item.food_cost_pct}</span>
+    </div>`).join('') + (worst.length === 0 ? '<div style="color:var(--text3);font-size:13px;padding:1rem 0;">No items over 50% FC</div>' : '');
+
+  // Category bars
+  const cats = {};
+  valid.forEach(d => {
+    const c = d.category || 'Other';
+    if (!cats[c]) cats[c] = {total:0, count:0};
+    cats[c].total += fcPct(d);
+    cats[c].count++;
+  });
+  const catArr = Object.entries(cats).map(([k,v]) => ({cat:k, avg: v.total/v.count})).sort((a,b)=>a.avg-b.avg);
+  const maxFC = Math.max(...catArr.map(c=>c.avg));
+  const barsEl = document.getElementById('cat-bars-overview');
+  barsEl.innerHTML = catArr.map(c => `
+    <div class="cat-row">
+      <div class="cat-label">${c.cat}</div>
+      <div class="cat-bar-track">
+        <div class="cat-bar-fill" style="width:${(c.avg/maxFC*100).toFixed(1)}%;background:${fcBarColor(c.avg)};"></div>
+      </div>
+      <div class="cat-pct" style="color:${fcBarColor(c.avg)}">${c.avg.toFixed(1)}%</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// MENU TABLE
+// ============================================================
+
+function initMenuCats() {
+  const cats = [...new Set(MENU_DATA.map(d => d.category || 'Other').filter(Boolean))].sort();
+  const sel = document.getElementById('menu-cat');
+  cats.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+}
+
+function renderMenuTable() {
+  const search = document.getElementById('menu-search').value.toLowerCase();
+  const cat    = document.getElementById('menu-cat').value;
+  const sort   = document.getElementById('menu-sort').value;
+
+  let items = MENU_DATA.filter(d => {
+    if (cat && (d.category || 'Other') !== cat) return false;
+    if (search && !d.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  items.sort((a,b) => {
+    if (sort === 'name')         return a.name.localeCompare(b.name);
+    if (sort === 'fc-asc')       return fcPct(a) - fcPct(b);
+    if (sort === 'fc-desc')      return fcPct(b) - fcPct(a);
+    if (sort === 'profit-desc')  return b.profit - a.profit;
+    if (sort === 'price-desc')   return b.sell_price - a.sell_price;
+  });
+
+  const tbody = document.getElementById('menu-tbody');
+  const empty = document.getElementById('menu-empty');
+
+  if (items.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = items.map((item, i) => {
+    const profitColor = item.profit < 0 ? 'var(--red)' : item.profit > 8 ? 'var(--green)' : 'var(--text)';
+    return `<tr>
+      <td class="td-name" title="${item.name}">${item.name}</td>
+      <td class="td-cat">${item.category || '—'}</td>
+      <td class="td-mono right">${money(item.sell_price)}</td>
+      <td class="td-mono right">${money(item.cost)}</td>
+      <td class="td-mono right" style="color:${profitColor}">${item.profit < 0 ? '-' : ''}${money(item.profit)}</td>
+      <td class="right"><span class="fc-badge ${fcColor(item.food_cost_pct)}">${item.food_cost_pct}</span></td>
+      <td class="right"><button onclick="openRecipe(${i})" style="background:var(--surface3);border:none;border-radius:4px;color:var(--text2);padding:3px 10px;cursor:pointer;font-size:11px;font-family:var(--font-mono);">View</button></td>
+    </tr>`;
+  }).join('');
+
+  // Store for modal access
+  window._filteredMenu = items;
+}
+
+// ============================================================
+// RECIPE MODAL
+// ============================================================
+
+function openRecipe(idx) {
+  const item = window._filteredMenu ? window._filteredMenu[idx] : MENU_DATA[idx];
+  document.getElementById('modal-title').textContent = item.name;
+  document.getElementById('modal-cat').textContent = item.category || 'Uncategorized';
+  document.getElementById('modal-price').textContent = '$' + item.sell_price.toFixed(2);
+  const costEl = document.getElementById('modal-cost');
+  costEl.textContent = '$' + item.cost.toFixed(2);
+  const fcEl = document.getElementById('modal-fc');
+  fcEl.textContent = item.food_cost_pct;
+  fcEl.className = 'modal-stat-value ' + (fcPct(item) > 50 ? 'text-red' : fcPct(item) > 30 ? 'text-amber' : 'text-green');
+
+  const ingList = document.getElementById('modal-ingredients');
+  if (item.ingredients && item.ingredients.length > 0) {
+    ingList.innerHTML = item.ingredients.map(ing => `
+      <div class="ing-row">
+        <div class="ing-name">${ing.ingredient}</div>
+        <div class="ing-qty">${ing.qty} ${ing.unit}</div>
+        <div class="ing-cost">$${ing.ext_cost.toFixed(4)}</div>
+      </div>`).join('');
+  } else {
+    ingList.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:0.5rem 0;">No ingredient detail available.</div>';
+  }
+
+  document.getElementById('recipe-modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('recipe-modal')) {
+    document.getElementById('recipe-modal').classList.remove('open');
+  }
+}
+
+// ============================================================
+// MARCH REPORT
+// ============================================================
+
+function initMarch() {
+  const totalSales = 87641.80;
+  const tbody = document.getElementById('march-tbody');
+  const sorted = [...MARCH_CATS].sort((a,b) => b.sales - a.sales);
+  tbody.innerHTML = sorted.map((r,i) => {
+    const bg = i%2===0 ? '' : 'background:var(--surface2);';
+    return `<tr style="${bg}">
+      <td>${r.cat}</td>
+      <td class="td-mono right">$${r.sales.toLocaleString()}</td>
+      <td class="td-mono right">$${r.cost.toLocaleString()}</td>
+      <td class="right"><span class="fc-badge ${r.fc>=35?'fc-bad':r.fc>=25?'fc-warn':'fc-good'}">${r.fc.toFixed(1)}%</span></td>
+      <td class="td-mono right text-muted">${(r.sales/totalSales*100).toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  const itemsTbody = document.getElementById('march-items-tbody');
+  itemsTbody.innerHTML = MARCH_ITEMS.map((r,i) => {
+    const bg = i%2===0 ? '' : 'background:var(--surface2);';
+    return `<tr style="${bg}">
+      <td class="td-name" title="${r.name}">${r.name}</td>
+      <td class="td-mono right">${r.qty}</td>
+      <td class="td-mono right">$${r.gross.toLocaleString('en-US',{minimumFractionDigits:2})}</td>
+    </tr>`;
+  }).join('');
+
+  // Category bars
+  const maxFC = Math.max(...MARCH_CATS.map(c=>c.fc));
+  const barsEl = document.getElementById('march-cat-bars');
+  const bySales = [...MARCH_CATS].sort((a,b)=>b.fc-a.fc);
+  barsEl.innerHTML = bySales.map(c => `
+    <div class="cat-row">
+      <div class="cat-label">${c.cat}</div>
+      <div class="cat-bar-track">
+        <div class="cat-bar-fill" style="width:${(c.fc/maxFC*100).toFixed(1)}%;background:${fcBarColor(c.fc)};"></div>
+      </div>
+      <div class="cat-pct" style="color:${fcBarColor(c.fc)}">${c.fc.toFixed(1)}%</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// INVENTORY
+// ============================================================
+
+function initInventory() {
+  // Populate section filter
+  const sel = document.getElementById('inv-section');
+  INVENTORY_DATA.forEach(s => sel.innerHTML += `<option value="${s.section}">${s.section}</option>`);
+
+  // Stats
+  const allItems = INVENTORY_DATA.flatMap(s => s.items.map(i => ({...i, section:s.section})));
+  const totalValue = allItems.reduce((sum,i) => sum + i.count * i.price, 0);
+  const totalItems = allItems.length;
+  const lowStock = allItems.filter(i => i.count > 0 && i.count < 0.5).length;
+
+  document.getElementById('inv-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Total SKUs</div><div class="stat-value stat-gold">${totalItems}</div></div>
+    <div class="stat-card"><div class="stat-label">Total Value</div><div class="stat-value stat-gold">$${totalValue.toFixed(0)}</div></div>
+    <div class="stat-card"><div class="stat-label">Sections</div><div class="stat-value">${INVENTORY_DATA.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value stat-amber">${lowStock}</div></div>`;
+
+  renderInventory();
+}
+
+function renderInventory() {
+  const search  = document.getElementById('inv-search').value.toLowerCase();
+  const section = document.getElementById('inv-section').value;
+  const sort    = document.getElementById('inv-sort').value;
+
+  const allItems = INVENTORY_DATA.flatMap(s => s.items.map(i => ({...i, section:s.section})));
+
+  let items = allItems.filter(i => {
+    if (section && i.section !== section) return false;
+    if (search && !i.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  items.sort((a,b) => {
+    if (sort === 'name')         return a.name.localeCompare(b.name);
+    if (sort === 'total-desc')   return (b.count*b.price) - (a.count*a.price);
+    if (sort === 'count-asc')    return a.count - b.count;
+    return 0;
+  });
+
+  const tbody = document.getElementById('inv-tbody');
+  tbody.innerHTML = items.map((item, i) => {
+    const total = item.count * item.price;
+    const low = item.count > 0 && item.count < 0.5;
+    const countColor = low ? 'var(--amber)' : item.count === 0 ? 'var(--red)' : 'var(--text)';
+    const bg = i%2===0 ? '' : 'background:var(--surface2);';
+    return `<tr style="${bg}">
+      <td class="td-name" title="${item.name}">${item.name}${low ? ' <span style="font-size:10px;color:var(--amber);font-family:var(--font-mono);">LOW</span>' : ''}</td>
+      <td class="td-cat">${item.section}</td>
+      <td class="td-cat">${item.pack || '—'}</td>
+      <td class="td-mono right" style="color:${countColor}">${item.count}</td>
+      <td class="td-mono right">$${item.price.toFixed(2)}</td>
+      <td class="td-mono right text-gold">$${total.toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+
+initOverview();
+initMenuCats();
+renderMenuTable();
+initMarch();
+initInventory();
+
+// ESC to close modal
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('recipe-modal').classList.remove('open');
+});
+</script>
+</body>
+</html>
