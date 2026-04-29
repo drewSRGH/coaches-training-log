@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach's Pub & Grill — Kitchen Training Log (Print)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #fff;
+  color: #111;
+  font-family: 'Barlow', sans-serif;
+  font-size: 11pt;
+  line-height: 1.45;
+}
+
+/* ── PAGE SETUP ── */
+@page {
+  size: letter;
+  margin: 0.65in 0.6in 0.65in 0.6in;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  .page-break { page-break-before: always; }
+  .avoid-break { page-break-inside: avoid; }
+  body { font-size: 10pt; }
+}
+
+/* ── SCREEN PREVIEW WRAPPER ── */
+.page-wrapper {
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 0.65in 0.6in;
+  background: #fff;
+}
+
+/* ── PRINT BUTTON ── */
+.print-bar {
+  background: #1a1a1a;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.print-bar span {
+  color: #aaa;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.print-btn {
+  background: #e8a020;
+  color: #111;
+  border: none;
+  padding: 9px 22px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.print-btn:hover { background: #d09010; }
+
+/* ── DOCUMENT HEADER ── */
+.doc-header {
+  border-bottom: 3px solid #111;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.doc-title-block h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 3px;
+  line-height: 1;
+  color: #111;
+}
+
+.doc-title-block p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #555;
+  margin-top: 4px;
+}
+
+.doc-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  text-align: right;
+}
+
+/* ── TRAINEE FIELDS ── */
+.trainee-section {
+  background: #f7f7f7;
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.trainee-section h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.field-row.two-col { grid-template-columns: 1fr 1fr; }
+
+.field-item { display: flex; flex-direction: column; gap: 3px; }
+
+.field-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.field-line {
+  border: none;
+  border-bottom: 1.5px solid #bbb;
+  height: 22px;
+  background: transparent;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+  color: #111;
+}
+
+/* ── STATION HEADER ── */
+.station-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.station-header.fryer { background: #7a2800; }
+.station-header.oven  { background: #7a2800; }
+.station-header.grill { background: #0a3a14; }
+
+.station-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  color: #fff;
+  line-height: 1;
+}
+
+.station-header .station-icon { font-size: 1.6rem; }
+
+.station-header .temps {
+  margin-left: auto;
+  text-align: right;
+}
+
+.station-header .temp-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  line-height: 1.6;
+}
+
+/* ── SECTION LABELS ── */
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 4px 10px;
+  margin: 14px 0 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.section-label.fryer { background: #7a2800; }
+.section-label.oven  { background: #7a2800; }
+.section-label.grill { background: #0a3a14; }
+.section-label.dark  { background: #222; }
+
+/* ── ITEM TABLE ── */
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+}
+
+.item-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #777;
+  border-bottom: 1.5px solid #ccc;
+  padding: 4px 8px 4px 0;
+  text-align: left;
+}
+
+.item-table th:last-child { text-align: right; }
+
+.item-table td {
+  padding: 5px 8px 5px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.item-table td:last-child {
+  text-align: right;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  color: #333;
+}
+
+.item-table .item-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.item-table .item-note {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 1px;
+}
+
+.tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 3px;
+  margin-top: 2px;
+}
+
+.tag-fryer  { background: #f0ddd0; color: #7a2800; border: 1px solid #d0a090; }
+.tag-oven   { background: #f0ddd0; color: #7a2800; border: 1px solid #d0a090; }
+.tag-grill  { background: #d0ecd8; color: #0a3a14; border: 1px solid #90c0a0; }
+.tag-flat   { background: #f0e8c8; color: #4a3a00; border: 1px solid #c0b080; }
+.tag-butter { background: #f8f0d0; color: #5a4000; border: 1px solid #d0c080; }
+
+/* ── ALERT BOXES ── */
+.alert {
+  border-radius: 3px;
+  padding: 8px 11px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.alert .icon { flex-shrink: 0; }
+.alert-warn   { background: #fffbea; border: 1.5px solid #e8c840; color: #5a4a00; }
+.alert-danger { background: #fff0f0; border: 1.5px solid #e08080; color: #5a0000; }
+.alert-info   { background: #f0f4ff; border: 1.5px solid #90a8e0; color: #1a2a5a; }
+.alert-green  { background: #f0fff4; border: 1.5px solid #80c090; color: #0a3a14; }
+
+/* ── STEP LISTS ── */
+.step-list { list-style: none; margin-bottom: 10px; }
+
+.step-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+  align-items: flex-start;
+}
+
+.step-num {
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sn-fryer { background: #7a2800; }
+.sn-oven  { background: #7a2800; }
+.sn-grill { background: #0a3a14; }
+.sn-dark  { background: #333; }
+
+.step-content { flex: 1; }
+
+.step-content strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.step-content p { font-size: 0.78rem; color: #444; line-height: 1.4; }
+
+/* ── TWO COLUMN LAYOUT ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.two-col-wide {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+}
+
+/* ── TOOL LIST ── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tool-item {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 7px 9px;
+}
+
+.tool-item .tool-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.tool-item p { font-size: 0.72rem; color: #555; line-height: 1.35; }
+
+/* ── CHECKLIST ── */
+.checklist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  margin-bottom: 10px;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.79rem;
+  padding: 3px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.check-box {
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid #aaa;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.check-label { flex: 1; line-height: 1.35; }
+
+.check-freq {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.63rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.freq-daily   { background: #f0ddd0; color: #7a2800; }
+.freq-weekly  { background: #f0e8c8; color: #5a4000; }
+.freq-monthly { background: #dde8f8; color: #1a2a5a; }
+.freq-shift   { background: #d8eedd; color: #0a3a14; }
+
+/* ── TEMP CHART ── */
+.temp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+}
+
+.temp-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #777;
+  border-bottom: 1.5px solid #ccc;
+  padding: 4px 8px 4px 0;
+  text-align: left;
+}
+
+.temp-table td {
+  padding: 5px 8px 5px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.temp-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.temp-table .doneness {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+}
+
+.temp-table .description { font-size: 0.75rem; color: #666; }
+
+.temp-table .temp-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-align: right;
+}
+
+/* ── HOT WELL TABLE ── */
+.well-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+}
+
+.well-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #777;
+  border-bottom: 1.5px solid #ccc;
+  padding: 4px 8px 4px 0;
+  text-align: left;
+}
+
+.well-table td {
+  padding: 5px 8px 5px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.well-table .item-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+/* ── SIGN-OFF ── */
+.signoff-section {
+  border: 2px solid #111;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 18px;
+}
+
+.signoff-section h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  border-bottom: 1.5px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.signoff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.signoff-card {
+  border: 1.5px solid #ddd;
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+
+.signoff-card.full { grid-column: 1 / -1; }
+
+.signoff-card h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.signoff-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  margin-bottom: 4px;
+}
+
+.signoff-check .check-box { width: 12px; height: 12px; }
+
+.sig-line {
+  margin-top: 10px;
+  border-bottom: 1.5px solid #bbb;
+  height: 22px;
+}
+
+.sig-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 3px;
+}
+
+.final-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.notes-line {
+  margin-top: 14px;
+}
+
+.notes-area {
+  border-bottom: 1.5px solid #bbb;
+  height: 20px;
+  margin-bottom: 6px;
+}
+
+/* ── DIVIDER ── */
+hr.divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 14px 0;
+}
+
+/* ── PAGE FOOTER ── */
+.page-footer {
+  position: fixed;
+  bottom: 0.3in;
+  left: 0.6in;
+  right: 0.6in;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  color: #aaa;
+  letter-spacing: 0.5px;
+  border-top: 1px solid #ddd;
+  padding-top: 4px;
+}
+
+@media screen {
+  .page-footer { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- PRINT BAR (screen only) -->
+<div class="print-bar no-print">
+  <span>COACH'S PUB & GRILL — KITCHEN TRAINING LOG — PRINT VERSION</span>
+  <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+
+<div class="page-wrapper">
+
+<!-- ── PAGE 1: COVER + TRAINEE INFO ── -->
+<div class="doc-header">
+  <div class="doc-title-block">
+    <h1>Coach's Pub & Grill</h1>
+    <p>Kitchen Operations — New Hire Training Log</p>
+  </div>
+  <div class="doc-badge">
+    Fryer: 375°F &nbsp;|&nbsp; Pizza Oven: 450°F<br>
+    Hot Wells: 140°F+ &nbsp;|&nbsp; Chicken: Always 165°F
+  </div>
+</div>
+
+<div class="trainee-section avoid-break">
+  <h3>Trainee Information</h3>
+  <div class="field-row">
+    <div class="field-item">
+      <div class="field-label">Trainee Name</div>
+      <input class="field-line" type="text">
+    </div>
+    <div class="field-item">
+      <div class="field-label">Position</div>
+      <input class="field-line" type="text">
+    </div>
+    <div class="field-item">
+      <div class="field-label">Start Date</div>
+      <input class="field-line" type="text">
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field-item">
+      <div class="field-label">Trainer Name</div>
+      <input class="field-line" type="text">
+    </div>
+    <div class="field-item">
+      <div class="field-label">Training Week</div>
+      <input class="field-line" type="text">
+    </div>
+    <div class="field-item">
+      <div class="field-label">Department</div>
+      <input class="field-line" type="text" value="Kitchen — Line Cook">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FRYER STATION
+══════════════════════════════════════════════ -->
+<div class="station-header fryer avoid-break">
+  <span class="station-icon">🔥</span>
+  <h2>Fryer Station</h2>
+  <div class="temps">
+    <span class="temp-pill">Operating Temp: 375°F</span>
+    <span class="temp-pill">All times assume frozen product</span>
+  </div>
+</div>
+
+<!-- FRYER COOK TIMES -->
+<div class="section-label fryer">Cook Times</div>
+<div class="two-col avoid-break">
+  <div>
+    <table class="item-table">
+      <thead><tr><th>Item</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Wings</div><div class="item-note">Fry then sauce at station</div></td><td>12–14 min</td></tr>
+        <tr><td><div class="item-name">Pub Pickles</div><div class="item-note">Watch for golden color</div></td><td>2–3 min</td></tr>
+        <tr><td><div class="item-name">Cheese Sticks</div></td><td>2–3 min</td></tr>
+        <tr><td><div class="item-name">Gouda Mac Curds</div><div class="item-note">Drop gently — watch for blowout</div></td><td>2–3 min</td></tr>
+        <tr><td><div class="item-name">Boneless Wing Basket</div><div class="item-note">Toss in choice of sauce</div></td><td>6–8 min</td></tr>
+        <tr><td><div class="item-name">Traditional Wing Basket</div><div class="item-note">Toss in choice of sauce</div></td><td>12–14 min</td></tr>
+        <tr><td><div class="item-name">Chicken Strips</div></td><td>5–6 min</td></tr>
+        <tr><td><div class="item-name">Fish & Chips</div></td><td>4–5 min</td></tr>
+        <tr><td><div class="item-name">Perch Tacos</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Perch Dinner</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Taco Salad Bowl</div><div class="item-note">Tortilla shell — use mold</div></td><td>1–2 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="item-table">
+      <thead><tr><th>Sides & Tots (Fry Only)</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Fries</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Sweet Potato Fries</div><div class="item-note">Sugars burn fast — pull early</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Tater Tots</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Onion Rings</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Homemade Chips</div><div class="item-note">Thin cut — watch constantly</div></td><td>2–3 min</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info" style="margin-top:8px;">
+      <span class="icon">ℹ️</span>
+      <span><strong>Tots: Fry here until golden, then pass to Oven Station</strong> for topping and finishing. Do not dress tots at the fryer.</span>
+    </div>
+    <div class="alert alert-danger" style="margin-top:6px;">
+      <span class="icon">🚨</span>
+      <span><strong>Grease fire: NEVER use water.</strong> Use Class K extinguisher only. Know its location before your shift.</span>
+    </div>
+  </div>
+</div>
+
+<!-- FRYER STARTUP & CLEANING -->
+<div class="two-col avoid-break">
+  <div>
+    <div class="section-label fryer">Startup Procedure</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-fryer">1</div><div class="step-content"><strong>Inspect Fryer</strong><p>No debris, water, or foreign objects in oil.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">2</div><div class="step-content"><strong>Check Oil Level</strong><p>Between MIN and MAX lines. Top off if needed.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">3</div><div class="step-content"><strong>Check Oil Quality</strong><p>Dark color or heavy foam = change oil before service.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">4</div><div class="step-content"><strong>Preheat to 375°F</strong><p>Allow 15–20 min. Do not drop food until temp confirmed.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">5</div><div class="step-content"><strong>Verify with Probe Thermometer</strong><p>Do not rely on the built-in gauge only.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">6</div><div class="step-content"><strong>Prep Station</strong><p>Baskets clean & dry, drain rack with paper towels, product stocked.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div class="section-label fryer">End of Day Cleaning</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-fryer">1</div><div class="step-content"><strong>Turn Off & Cool to 150–175°F</strong><p>Hot enough to flow, cool enough to handle.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">2</div><div class="step-content"><strong>Filter the Oil</strong><p>Strain all sediment through the filter machine.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">3</div><div class="step-content"><strong>Wipe the Fryer Pot</strong><p>While still warm — paper towels on interior walls.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">4</div><div class="step-content"><strong>Return Filtered Oil</strong><p>Pour back in, top off to correct level.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">5</div><div class="step-content"><strong>Wash & Dry Baskets</strong><p>Hot soapy water. Fully air dry before storing.</p></div></li>
+      <li class="step-item"><div class="step-num sn-fryer">6</div><div class="step-content"><strong>Degrease Area</strong><p>Exterior, counter, and floor beneath. Prevent slip hazards.</p></div></li>
+    </ul>
+    <div class="alert alert-warn">
+      <span class="icon">⚠️</span>
+      <span><strong>Weekly:</strong> Full oil change & boil-out. <strong>Monthly:</strong> Test high-limit thermostat shutoff.</span>
+    </div>
+  </div>
+</div>
+
+<!-- FRYER CHECKLIST -->
+<div class="section-label fryer">Daily Checklist</div>
+<div class="checklist-grid avoid-break">
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Inspect fryer — no debris or water in oil</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Skim debris every 30–45 min during service</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Check oil level (MIN/MAX lines)</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Monitor oil temp — maintain 375°F</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Check oil quality — color, smell, foam</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Turn off, cool, filter oil end of day</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Preheat to 375°F (15–20 min)</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Wash & dry fryer baskets</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Verify temp with probe thermometer</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Degrease exterior & floor beneath</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm baskets are clean & dry</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Full oil change & boil-out</div><span class="check-freq freq-weekly">Weekly</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm Class K extinguisher is accessible</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Test high-limit thermostat shutoff</div><span class="check-freq freq-monthly">Monthly</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     OVEN STATION — page break
+══════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<div class="station-header oven avoid-break">
+  <span class="station-icon">🍕</span>
+  <h2>Oven & Hot Station</h2>
+  <div class="temps">
+    <span class="temp-pill">Pizza Oven: 450°F &nbsp;|&nbsp; Hot Wells: 140°F+</span>
+    <span class="temp-pill">Microwave for single-portion backup only</span>
+  </div>
+</div>
+
+<!-- OVEN COOK TIMES -->
+<div class="section-label oven">Cook Times — Pizza Oven @ 450°F</div>
+<div class="two-col avoid-break">
+  <div>
+    <table class="item-table">
+      <thead><tr><th>Pizza & Calzones</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Cheese Bread</div><div class="item-note">Watch edges</div></td><td>6–8 min</td></tr>
+        <tr><td><div class="item-name">Pretzel Logs</div><div class="item-note">Deep golden brown. Queso from hot well.</div></td><td>8–10 min</td></tr>
+        <tr><td><div class="item-name">7" Pizza</div><div class="item-note">Cooks fast — watch closely</div></td><td>7–9 min</td></tr>
+        <tr><td><div class="item-name">10" Cauliflower Crust</div><div class="item-note">Pull early — edges burn fast</div></td><td>7–8 min</td></tr>
+        <tr><td><div class="item-name">12" Pizza</div></td><td>10–12 min</td></tr>
+        <tr><td><div class="item-name">16" Pizza</div><div class="item-note">Rotate halfway if hot spots</div></td><td>13–15 min</td></tr>
+        <tr><td><div class="item-name">Specialty Pizza</div><div class="item-note">Add to base time above</div></td><td>+1–2 min</td></tr>
+        <tr><td><div class="item-name">Calzones (All)</div><div class="item-note">Score top before baking</div></td><td>14–16 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="item-table">
+      <thead><tr><th>Entrees & Mexican League</th><th>Time</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Tots — Finish from Fryer</div><div class="item-note">Top & finish after fryer station delivers</div><div><span class="tag tag-fryer">From Fryer</span></div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Italian / Club Grinder</div><div class="item-note">Toast bread, assemble cold items after</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Philly Grinder — Bread</div><div class="item-note">Toast bread, melt cheese once ribeye arrives</div><div><span class="tag tag-flat">Ribeye from Flattop</span></div></td><td>4–5 min</td></tr>
+        <tr><td><div class="item-name">Hot Roast Beef</div><div class="item-note">Toast Texas toast. Beef & gravy from hot well.</div></td><td>3–4 min</td></tr>
+        <tr><td><div class="item-name">Beef Shepard's Pie</div><div class="item-note">Bake until golden and bubbling</div></td><td>10–12 min</td></tr>
+        <tr><td><div class="item-name">White Cheddar Mac</div><div class="item-note">Bake until cheese bubbly and golden</div></td><td>8–10 min</td></tr>
+        <tr><td><div class="item-name">Nachos (Sm & Lg)</div><div class="item-note">Cold toppings after oven</div></td><td>4–5 min</td></tr>
+        <tr><td><div class="item-name">Wet Burrito</div></td><td>5–6 min</td></tr>
+        <tr><td><div class="item-name">Barbacoa Burrito</div></td><td>5–6 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- HOT WELLS -->
+<div class="section-label oven">Hot Wells — Minimum 140°F at All Times</div>
+<table class="well-table avoid-break">
+  <thead><tr><th>Item</th><th>Used For</th><th>Notes</th><th>Temp</th></tr></thead>
+  <tbody>
+    <tr><td><div class="item-name">Queso Dip</div></td><td>Queso Dip appetizer, Pretzel Logs</td><td>Stir regularly — prevent skin forming</td><td>140°F+</td></tr>
+    <tr><td><div class="item-name">Spinach Artichoke Dip</div></td><td>Spinach Artichoke Dip appetizer</td><td>Stir every 30 min. Cover between service.</td><td>140°F+</td></tr>
+    <tr><td><div class="item-name">Beef Gravy</div></td><td>Hot Roast Beef</td><td>Whisk if thickening. Add stock to thin.</td><td>140°F+</td></tr>
+    <tr><td><div class="item-name">Mashed Potatoes</div></td><td>Hot Roast Beef, Shepard's Pie</td><td>Stir regularly. Add butter if drying out.</td><td>140°F+</td></tr>
+    <tr><td><div class="item-name">Mixed Vegetables</div></td><td>Side dish</td><td>Top off with fresh batches as needed.</td><td>140°F+</td></tr>
+    <tr><td><div class="item-name">Slow-Roasted Beef</div></td><td>Hot Roast Beef, Barbacoa Burrito</td><td>Keep covered. Add liquid if drying.</td><td>140°F+</td></tr>
+  </tbody>
+</table>
+<div class="alert alert-danger avoid-break">
+  <span class="icon">🌡️</span>
+  <span><strong>Food safety:</strong> Check hot well temps every 2 hours and log. Any item below 140°F for more than 2 hours must be discarded. Never top off old product with new — empty, clean, and refill.</span>
+</div>
+
+<!-- OVEN STARTUP & CLEANING -->
+<div class="two-col avoid-break">
+  <div>
+    <div class="section-label oven">Startup Procedure</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-oven">1</div><div class="step-content"><strong>Turn On Pizza Oven First</strong><p>Set to 450°F immediately on arrival. Allow 20–30 min to preheat.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">2</div><div class="step-content"><strong>Turn On Hot Wells</strong><p>Allow 15–20 min to reach 140°F before loading food pans.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">3</div><div class="step-content"><strong>Load All Hot Well Pans</strong><p>Queso, dips, gravy, mashed potatoes, veg, slow-roasted beef. Cover all.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">4</div><div class="step-content"><strong>Verify All Temps</strong><p>Confirm hot wells 140°F+ and oven 450°F with independent thermometers.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">5</div><div class="step-content"><strong>Prep Pizza & Grinder Station</strong><p>Dough proofed, toppings stocked, hoagie rolls ready.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div class="section-label oven">End of Day Cleaning</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-oven">1</div><div class="step-content"><strong>Brush Oven Deck Hourly</strong><p>Sweep burnt cheese and debris during service.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">2</div><div class="step-content"><strong>Turn Off Oven — Cool to Under 200°F</strong><p>Scrape deck, wipe interior walls and door glass.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">3</div><div class="step-content"><strong>Remove Hot Well Contents</strong><p>Transfer to labeled, dated containers. Discard anything over 4 hours without temp log.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">4</div><div class="step-content"><strong>Drain & Scrub Hot Wells</strong><p>Hot soapy water. Wash all food pans through dish machine.</p></div></li>
+      <li class="step-item"><div class="step-num sn-oven">5</div><div class="step-content"><strong>Clean Microwave</strong><p>Wipe all interior walls. Wash turntable plate daily.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- OVEN CHECKLIST -->
+<div class="section-label oven">Daily Checklist</div>
+<div class="checklist-grid avoid-break">
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Turn on pizza oven first — preheat 20–30 min</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Brush oven deck hourly during service</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Turn on hot wells — preheat to 140°F+</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Check hot well temps every 2 hrs — log results</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Load all hot well pans and cover</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Stir queso and dips every 30 min</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Verify oven at 450°F with independent thermometer</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Remove hot well pans — label, date, store</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm pizza dough is proofed</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Drain & scrub hot well basins</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm oven peel, pizza cutter & gloves accessible</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Descale hot well basins with diluted vinegar</div><span class="check-freq freq-weekly">Weekly</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Verify all hot well temps at 140°F+ with probe</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Deep clean pizza oven deck and walls</div><span class="check-freq freq-weekly">Weekly</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     GRILL STATION — page break
+══════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<div class="station-header grill avoid-break">
+  <span class="station-icon">🥩</span>
+  <h2>Grill & Flattop Station</h2>
+  <div class="temps">
+    <span class="temp-pill">Chargriller: High Heat &nbsp;|&nbsp; Flattop: Med-High + Butter Wheel</span>
+    <span class="temp-pill">Chicken: Always 165°F &nbsp;|&nbsp; Burgers: Cook to Order</span>
+  </div>
+</div>
+
+<!-- BURGER TEMPS -->
+<div class="section-label grill">Burger Temperatures — Cook to Order</div>
+<div class="two-col-wide avoid-break">
+  <div>
+    <table class="temp-table">
+      <thead><tr><th>Doneness</th><th>Description</th><th style="text-align:right;">Internal Temp</th></tr></thead>
+      <tbody>
+        <tr><td><span class="temp-dot" style="background:#e03030;"></span><span class="doneness">Rare</span></td><td><span class="description">Deep red center, soft texture</span></td><td class="temp-val" style="color:#c02020;">120–125°F</td></tr>
+        <tr><td><span class="temp-dot" style="background:#e05020;"></span><span class="doneness">Medium Rare</span></td><td><span class="description">Red-pink center, slightly firmer</span></td><td class="temp-val" style="color:#c04020;">130–135°F</td></tr>
+        <tr><td><span class="temp-dot" style="background:#c07020;"></span><span class="doneness">Medium</span></td><td><span class="description">Pink center, firm with some give</span></td><td class="temp-val" style="color:#906020;">140–145°F</td></tr>
+        <tr><td><span class="temp-dot" style="background:#906030;"></span><span class="doneness">Medium Well</span></td><td><span class="description">Slight pink, mostly firm</span></td><td class="temp-val" style="color:#705030;">150–155°F</td></tr>
+        <tr><td><span class="temp-dot" style="background:#604030;"></span><span class="doneness">Well Done</span></td><td><span class="description">No pink, fully firm throughout</span></td><td class="temp-val" style="color:#404030;">160°F+</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-warn" style="margin-top:6px;">
+      <span class="icon">⚠️</span>
+      <span>Burgers below 160°F served at guest's request. Always inform the guest of this risk. Always use a clean probe thermometer — never guess.</span>
+    </div>
+  </div>
+  <div>
+    <div class="alert alert-green" style="margin-bottom:8px;">
+      <span class="icon">🐔</span>
+      <span><strong>All chicken: 165°F. No exceptions.</strong> Grilled breast, wraps, salads, tacos, nachos, burritos, quesadilla. Verify with probe thermometer every time. Rest 2 min before slicing.</span>
+    </div>
+    <div class="alert alert-info">
+      <span class="icon">🐟</span>
+      <span><strong>Seafood — Visual cues only:</strong><br>
+      <strong>Salmon:</strong> Opaque through, slight give in center, good exterior color. Pull before fully firm — carryover finishes it.<br>
+      <strong>Shrimp:</strong> Pink, curled into a C shape, opaque through. O shape = overcooked. Pull at C shape.</span>
+    </div>
+  </div>
+</div>
+
+<!-- GRILL COOK TIMES -->
+<div class="section-label grill">Cook Times & Station Breakdown</div>
+<table class="item-table avoid-break">
+  <thead><tr><th>Item</th><th>Station</th><th>Notes</th><th>Temp / Time</th></tr></thead>
+  <tbody>
+    <tr><td><div class="item-name">All Burgers (½ lb)</div></td><td><span class="tag tag-grill">Chargriller Sear</span><span class="tag tag-flat">Flattop Finish</span><span class="tag tag-butter">Butter Wheel Bun</span></td><td>Sear for marks, finish on flattop to order. Melt cheese and render bacon on flattop.</td><td>Cook to Order</td></tr>
+    <tr><td><div class="item-name">The Smitty</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop + Whiskey Onions</span></td><td>Whiskey-saute onions on flattop while burger finishes. Melt provolone. Add BBQ after.</td><td>Cook to Order</td></tr>
+    <tr><td><div class="item-name">Smothered Chicken</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop Finish + Veg</span></td><td>Chargriller for marks. Saute mushrooms & onions on flattop. Melt provolone before plating.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Balsamic Chicken</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop Finish</span></td><td>Chargriller for marks, finish on flattop. Drizzle balsamic glaze just before plating.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Chicken Club</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop</span><span class="tag tag-butter">Butter Wheel Flatbread</span></td><td>Toast flatbread on butter wheel. Cold items assembled after.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Triple Crown Chicken</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop + Ham + Bacon</span><span class="tag tag-butter">Butter Wheel Bun</span></td><td>Melt Swiss and American on flattop finish.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Chicken Wraps</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop + Tortilla</span></td><td>Warm tortilla briefly on flattop. Cold items after.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Chicken for Salads & Mexican League</div></td><td><span class="tag tag-grill">Chargriller</span><span class="tag tag-flat">Flattop Finish</span></td><td>Rest 2 min at 165°F then slice or dice. Fajita Salad, Tacos, Nachos, Burritos, Quesadilla.</td><td>165°F</td></tr>
+    <tr><td><div class="item-name">Philly Grinder — Ribeye</div></td><td><span class="tag tag-flat">Flattop Only</span></td><td>Shave ribeye thin. Cook with onions, peppers & mushrooms together. Coordinate with oven station for bread.</td><td>4–5 min</td></tr>
+    <tr><td><div class="item-name">Grilled Ham & Cheese</div></td><td><span class="tag tag-flat">Flattop</span><span class="tag tag-butter">Butter Wheel Texas Toast</span></td><td>Ham with Swiss and American on flattop. Toast Texas toast on butter wheel until golden.</td><td>3–4 min</td></tr>
+    <tr><td><div class="item-name">Chicken Quesadilla</div></td><td><span class="tag tag-grill">Chicken Chargriller</span><span class="tag tag-flat">Flattop Tortilla + Veg</span></td><td>Saute onions & peppers on flattop. Press tortilla on flattop until crispy.</td><td>3–4 min</td></tr>
+    <tr><td><div class="item-name">Tacos — Beef</div></td><td><span class="tag tag-flat">Flattop Only</span></td><td>Season and brown beef on flattop. Warm tortillas on flattop. Cold toppings after.</td><td>5–6 min</td></tr>
+    <tr><td><div class="item-name">Fajita Salad — Sauteed Veg</div></td><td><span class="tag tag-flat">Flattop Only</span></td><td>Saute onions and peppers until charred and tender.</td><td>4–5 min</td></tr>
+    <tr><td><div class="item-name">Salmon Plate / BLT Salmon Wrap</div></td><td><span class="tag tag-grill">Chargriller Only</span></td><td>Oil grill and fish. Done when opaque through, slight give, good exterior color.</td><td>Visual Cue</td></tr>
+    <tr><td><div class="item-name">Shrimp Dinner / Shrimp Tacos</div></td><td><span class="tag tag-grill">Chargriller Only</span></td><td>Done when pink, curled into a C shape, opaque through. O shape = overcooked.</td><td>Visual Cue</td></tr>
+  </tbody>
+</table>
+
+<!-- BUTTER WHEEL -->
+<div class="section-label grill">Butter Wheel — Flattop Toasting</div>
+<div class="two-col avoid-break">
+  <div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-grill">1</div><div class="step-content"><strong>Load at Opening</strong><p>Fill with softened butter. Position on the warm edge of the flattop — pliable, not pooling.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">2</div><div class="step-content"><strong>Roll, Don't Press</strong><p>Drag the cut face of bun or bread lightly across the wheel. Then place butter-side down on medium-heat zone.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">3</div><div class="step-content"><strong>Watch for Golden Color</strong><p>Pale = not enough time. Dark = too much heat. Adjust zone position as needed.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">4</div><div class="step-content"><strong>Refill During Service</strong><p>Dry wheel drags and tears the bread. Refill before it runs out.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">5</div><div class="step-content"><strong>End of Day</strong><p>Discard remaining butter — never save. Disassemble, wash, rinse, and fully dry before storing.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div class="alert alert-info" style="margin-bottom:8px;">
+      <span class="icon">🧈</span>
+      <span><strong>Everything that needs toasted bread goes through the butter wheel:</strong></span>
+    </div>
+    <table class="item-table">
+      <thead><tr><th>Item</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">All Burger Buns</div><div class="item-note">Both halves — top and bottom</div></td></tr>
+        <tr><td><div class="item-name">Texas Toast</div><div class="item-note">Grilled Ham & Cheese</div></td></tr>
+        <tr><td><div class="item-name">Flatbread</div><div class="item-note">Chicken Club</div></td></tr>
+        <tr><td><div class="item-name">Toasted Bun</div><div class="item-note">Triple Crown Chicken</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- GRILL STARTUP & CLEANING -->
+<div class="two-col avoid-break">
+  <div>
+    <div class="section-label grill">Startup Procedure</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-grill">1</div><div class="step-content"><strong>Turn On Chargriller</strong><p>Set to high. Allow 15–20 min to reach full heat before first protein.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">2</div><div class="step-content"><strong>Turn On Flattop</strong><p>Medium-high. Allow full surface to heat evenly — cold spots cause uneven cooking.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">3</div><div class="step-content"><strong>Season Flattop</strong><p>Apply thin layer of oil with a folded cloth across the entire surface.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">4</div><div class="step-content"><strong>Brush & Oil Chargriller Grates</strong><p>Brush residue from prior service. Oil grates with high-smoke-point oil.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">5</div><div class="step-content"><strong>Load Butter Wheel</strong><p>Softened butter on warm edge of flattop.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">6</div><div class="step-content"><strong>Stock Station</strong><p>All proteins, cheese, condiments. Clean probe thermometer at station and ready.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div class="section-label grill">End of Day Cleaning</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-grill">1</div><div class="step-content"><strong>Scrape Flattop Between Orders</strong><p>Push debris into grease trap every few orders during service.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">2</div><div class="step-content"><strong>Empty Grease Trap Regularly</strong><p>Before half full — overfull trap is a fire hazard.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">3</div><div class="step-content"><strong>Brush Chargriller Grates While Hot</strong><p>Carbon releases much easier at temp.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">4</div><div class="step-content"><strong>Scrape & Polish Flattop</strong><p>Reduce to low, add a little water, scrape in rows, polish with grill brick.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">5</div><div class="step-content"><strong>Re-oil Flattop Before Shutting Off</strong><p>Thin protective coat prevents rust overnight.</p></div></li>
+      <li class="step-item"><div class="step-num sn-grill">6</div><div class="step-content"><strong>Remove, Wash & Dry Grates and Drip Tray</strong><p>Once cooled — scrub, empty, wash, and dry all parts.</p></div></li>
+    </ul>
+    <div class="alert alert-danger" style="margin-top:6px;">
+      <span class="icon">🚨</span>
+      <span><strong>NEVER use water on a grease fire.</strong> Use Class K extinguisher only. Separate raw and cooked tongs — never cross-contaminate. Sanitize probe thermometer between every use.</span>
+    </div>
+  </div>
+</div>
+
+<!-- GRILL CHECKLIST -->
+<div class="section-label grill">Daily Checklist</div>
+<div class="checklist-grid avoid-break">
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Turn on chargriller — preheat to high (15–20 min)</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Scrape flattop between orders</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Turn on flattop — preheat to medium-high</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Brush chargriller grates between protein cooks</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Brush and oil chargriller grates at open</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Check grease trap — empty before half full</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Season flattop surface with oil at open</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Refill butter wheel as needed</div><span class="check-freq freq-shift">Per Shift</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Load butter wheel with softened butter</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Brush chargriller grates while hot at close</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm probe thermometer is clean and at station</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Scrape, polish, and re-oil flattop at close</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Separate raw & cooked tongs — no cross-contamination</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Discard butter — wash & dry butter wheel</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Confirm Class K extinguisher is accessible</div><span class="check-freq freq-daily">Daily</span></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-label">Deep clean chargriller interior and burners</div><span class="check-freq freq-weekly">Weekly</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SAFETY STANDARDS — page break
+══════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<!-- SAFETY HEADER -->
+<div class="doc-header" style="border-bottom-color:#8B1A1A;">
+  <div class="doc-title-block">
+    <h1 style="color:#8B1A1A;">Kitchen Safety Standards</h1>
+    <p>Coach's Pub & Grill — All Kitchen Staff — Required Reading & Sign-Off</p>
+  </div>
+  <div class="doc-badge" style="color:#8B1A1A;">
+    All staff must read, understand,<br>and sign before first shift
+  </div>
+</div>
+
+<!-- SECTION 1: PERSONAL PROTECTIVE EQUIPMENT -->
+<div class="section-label dark" style="background:#8B1A1A;">1. Personal Protective Equipment (PPE)</div>
+<div class="alert alert-danger avoid-break">
+  <span class="icon">🚨</span>
+  <span><strong>PPE is not optional.</strong> Failure to wear proper PPE is a safety violation and grounds for disciplinary action. All items below are required during every kitchen shift.</span>
+</div>
+<div class="two-col avoid-break">
+  <div>
+    <table class="item-table">
+      <thead><tr><th>PPE Item</th><th>Required When</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Non-Slip Closed-Toe Shoes</div><div class="item-note">Must be worn at all times in kitchen</div></td><td>Always</td></tr>
+        <tr><td><div class="item-name">Heat-Resistant Gloves</div><div class="item-note">Long cuff style rated for high heat</div></td><td>Handling hot pans, fryer baskets, oven items, hot well pans</td></tr>
+        <tr><td><div class="item-name">Oven Mitts / Pads</div><div class="item-note">Backup for large or bulky hot items</div></td><td>Removing large pans, sheet trays from oven</td></tr>
+        <tr><td><div class="item-name">Long Sleeves or Arm Guards</div><div class="item-note">Protects forearms from splatter and burns</div></td><td>Fryer station, chargriller station</td></tr>
+        <tr><td><div class="item-name">Cut-Resistant Glove</div><div class="item-note">One glove on non-dominant hand</div></td><td>Any prep work involving knives or mandoline</div></td></tr>
+        <tr><td><div class="item-name">Hair Restraint</div><div class="item-note">Hat, visor, hairnet, or tie-back</div></td><td>Always — no exceptions</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">✓</div><div class="step-content"><strong>Inspect PPE Before Each Shift</strong><p>Check gloves for holes or burns. Inspect non-slip shoes for worn soles. Replace damaged PPE immediately — do not use compromised equipment.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">✓</div><div class="step-content"><strong>Do Not Wear Loose Clothing</strong><p>Loose sleeves, dangling jewelry, or loose strings are a fire and entanglement hazard near open flames and equipment.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">✓</div><div class="step-content"><strong>No Open-Toe Footwear — Ever</strong><p>Hot grease, heavy pans, and sharp objects make open-toe shoes a serious injury risk. Non-slip, closed-toe shoes are mandatory.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">✓</div><div class="step-content"><strong>Aprons Must Be Worn</strong><p>A clean apron protects clothing and provides an additional barrier against splatter, spills, and minor burns.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 2: FIRE SAFETY -->
+<div class="section-label dark" style="background:#8B1A1A;">2. Fire Safety & Emergency Response</div>
+<div class="alert alert-danger avoid-break">
+  <span class="icon">🔥</span>
+  <span><strong>Know before you start your shift:</strong> Where is the nearest Class K fire extinguisher? Where is the fire suppression pull station? Where are the emergency exits? If you don't know — ask before you cook.</span>
+</div>
+<div class="two-col avoid-break">
+  <div>
+    <table class="item-table">
+      <thead><tr><th>Fire Class</th><th>Type</th><th>Extinguisher</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Class K</div></td><td>Cooking oils & grease fires</td><td><strong>Class K wet chemical ONLY</strong></td></tr>
+        <tr><td><div class="item-name">Class A</div></td><td>Ordinary combustibles (paper, wood)</td><td>ABC dry chemical or water</td></tr>
+        <tr><td><div class="item-name">Class C</div></td><td>Electrical fires</td><td>CO2 or dry chemical — NEVER water</td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-danger" style="margin-top:8px;">
+      <span class="icon">🚨</span>
+      <span><strong>NEVER use water on a grease or oil fire.</strong> Water causes a violent steam explosion that spreads burning oil and causes severe burns. Class K extinguisher only.</span>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#8B1A1A; margin-bottom:8px;">Grease Fire Response — In Order</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Turn Off the Heat Source</strong><p>Shut off the burner, fryer, or oven immediately. Remove the fuel source.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Do NOT Open the Oven Door</strong><p>If fire is inside the oven, keep the door closed — it will smother. Opening it feeds oxygen to the fire.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Smother if Possible</strong><p>A lid or sheet pan can smother a small pan fire. Slide it over carefully — do not drop it.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Use Class K Extinguisher</strong><p>Aim at the base of the flame. Sweep side to side. Stand back — extinguisher discharge is forceful.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>Evacuate & Call 911</strong><p>If the fire spreads beyond the immediate station, activate the fire alarm, evacuate all staff and guests, and call 911 from outside the building.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="two-col avoid-break" style="margin-top:10px;">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Fire Prevention — Daily Habits</div>
+    <div class="checklist-grid" style="grid-template-columns:1fr;">
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Keep combustibles (towels, paper, cardboard) 12"+ away from all open flames and heating elements</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Never leave fryer, chargriller, or oven unattended during service</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Empty fryer and chargriller drip trays regularly — overfull trays ignite</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Clean grease buildup from oven exterior, hood filters, and exhaust daily</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Turn off all equipment at the end of every shift — verify before leaving</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Report any malfunctioning equipment immediately — do not operate broken equipment</div></div>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Know Your Emergency Exits</div>
+    <div style="background:#fff0f0; border:1.5px solid #e08080; border-radius:3px; padding:10px 12px; font-size:0.8rem; color:#5a0000; margin-bottom:8px;">
+      <strong>Before your first shift, physically walk to:</strong><br><br>
+      ☐ &nbsp;Primary emergency exit from the kitchen<br>
+      ☐ &nbsp;Secondary emergency exit (backup route)<br>
+      ☐ &nbsp;Location of nearest Class K fire extinguisher<br>
+      ☐ &nbsp;Location of fire suppression system pull station<br>
+      ☐ &nbsp;Location of main gas shutoff valve<br>
+      ☐ &nbsp;Location of electrical panel / main breaker<br>
+      ☐ &nbsp;First aid kit location<br>
+      ☐ &nbsp;AED (defibrillator) location if on premises
+    </div>
+    <div class="alert alert-warn" style="font-size:0.77rem;">
+      <span class="icon">⚠️</span>
+      <span>In any emergency: <strong>people first, property second.</strong> Never re-enter a burning building for any reason.</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: BURN PREVENTION -->
+<div class="section-label dark" style="background:#8B1A1A;">3. Burn Prevention & Treatment</div>
+<div class="two-col avoid-break">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Common Burn Hazards by Station</div>
+    <table class="item-table">
+      <thead><tr><th>Station</th><th>Primary Burn Hazard</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">🔥 Fryer</div></td><td>Oil splatter from wet product, lowering baskets too fast, overflowing oil</td></tr>
+        <tr><td><div class="item-name">🍕 Pizza Oven</div></td><td>Reaching into 450°F oven without peel or gloves, steam from hot well lids</td></tr>
+        <tr><td><div class="item-name">🍕 Hot Wells</div></td><td>Steam release when lifting lids, splashing hot liquid, lifting heavy hot pans</td></tr>
+        <tr><td><div class="item-name">🥩 Chargriller</div></td><td>Flare-ups from fat drip, grate contact, radiant heat from open flame</td></tr>
+        <tr><td><div class="item-name">🥩 Flattop</div></td><td>Steam burns when adding water during cleaning, grease splatter</td></tr>
+        <tr><td><div class="item-name">All Stations</div></td><td>Hot pans with no visual cue they are hot, sharp edges on pans and lids</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Burn Treatment — Minor Burns</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Cool the Burn Immediately</strong><p>Run cool (not ice cold) water over the burned area for 10–20 minutes. Do not use ice — ice damages tissue and worsens the burn.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Do Not Pop Blisters</strong><p>Blisters are the body's natural protection. Popping them increases infection risk significantly.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Cover Loosely</strong><p>Apply a sterile non-stick dressing from the first aid kit. Do not wrap tightly.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Report All Burns</strong><p>All burns must be reported to the manager on duty, no matter how minor. Document in the incident log.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>Seek Medical Attention For</strong><p>Burns larger than 3 inches, burns on hands, face, or feet, burns that blister immediately, or any burn with white or charred skin — these require emergency care.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 4: FOOD SAFETY -->
+<div class="page-break"></div>
+<div class="section-label dark" style="background:#0a3a14;">4. Food Safety & Temperature Standards</div>
+<div class="alert alert-danger avoid-break">
+  <span class="icon">🌡️</span>
+  <span><strong>Temperature control is the most critical food safety practice in this kitchen.</strong> Improperly held or cooked food can cause serious illness. These standards are non-negotiable and are enforced by health code.</span>
+</div>
+
+<div class="two-col avoid-break">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#0a3a14; margin-bottom:8px;">Critical Internal Temperatures</div>
+    <table class="item-table">
+      <thead><tr><th>Food</th><th>Min Internal Temp</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Poultry (all chicken)</div></td><td style="color:#0a3a14; font-family:'Bebas Neue',sans-serif; font-size:1rem;">165°F</td></tr>
+        <tr><td><div class="item-name">Ground Beef (well done)</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">160°F</td></tr>
+        <tr><td><div class="item-name">Pork</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">145°F</td></tr>
+        <tr><td><div class="item-name">Fish & Seafood (FDA guideline)</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">145°F</td></tr>
+        <tr><td><div class="item-name">Hot Held Foods (hot wells)</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">140°F+</td></tr>
+        <tr><td><div class="item-name">Cold Held Foods</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">41°F or below</td></tr>
+        <tr><td><div class="item-name">Reheated Foods</div></td><td style="font-family:'Bebas Neue',sans-serif; font-size:1rem;">165°F within 2 hrs</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#0a3a14; margin-bottom:8px;">Temperature Danger Zone</div>
+    <div style="background:#fff8e8; border:1.5px solid #e8c840; border-radius:3px; padding:12px; font-size:0.8rem; margin-bottom:10px;">
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:#8B1A1A; margin-bottom:6px;">41°F – 135°F = DANGER ZONE</div>
+      Bacteria multiply rapidly in this range. Food left in the danger zone for more than <strong>2 cumulative hours</strong> must be discarded — no exceptions, no matter the cost.<br><br>
+      <strong>The 2-hour rule applies to:</strong> food left on counters between service, hot well items that drop below 140°F, cold prep items left out during prep, and any food in transit between stations.
+    </div>
+    <div class="alert alert-warn" style="font-size:0.78rem;">
+      <span class="icon">⚠️</span>
+      <span><strong>When in doubt, throw it out.</strong> Never taste food to determine if it is safe. Bacteria that cause illness are odorless and tasteless.</span>
+    </div>
+  </div>
+</div>
+
+<div class="two-col avoid-break" style="margin-top:10px;">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Cross-Contamination Prevention</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Separate Raw & Ready-to-Eat Foods</strong><p>Raw chicken, beef, and seafood must never contact cooked food, produce, or ready-to-eat items. Use dedicated cutting boards, containers, and utensils for each.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Color-Coded Cutting Boards</strong><p>Red = raw meat, Yellow = raw poultry, Blue = raw seafood, Green = produce, White = ready-to-eat. Never swap or substitute. Replace boards with deep knife marks immediately.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Sanitize Between Tasks</strong><p>Wash, rinse, and sanitize all surfaces, utensils, and cutting boards when switching between raw proteins or between raw and cooked food. Do not wipe with a dry towel — use sanitizer solution.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Dedicated Tongs & Utensils</strong><p>Separate tongs for raw and cooked protein at all stations. Do not use the same spatula on raw burger patties that you use to plate a finished burger.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>Proper Storage Order in Walk-In</strong><p>Top shelf: ready-to-eat and cooked foods. Middle: raw beef and pork. Bottom: raw poultry. Raw seafood in sealed containers. This prevents drip contamination.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Food Labeling & FIFO</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Label Everything</strong><p>All food in storage must be labeled with the item name and the date it was prepared or opened. No unlabeled food in walk-in, cooler, or prep area — ever.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>FIFO — First In, First Out</strong><p>Always use older product before newer product. When stocking deliveries, rotate new stock to the back and move older stock to the front. Check dates daily.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>7-Day Rule</strong><p>Most prepared foods must be used or discarded within 7 days of preparation. Check with your manager for specific hold times on individual items.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Never Top Off</strong><p>Do not add fresh product on top of old product in hot wells, prep containers, or on the line. Always empty, clean, and refill.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 5: PERSONAL HYGIENE -->
+<div class="section-label dark" style="background:#0a3a14;">5. Personal Hygiene Standards</div>
+<div class="two-col avoid-break">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Handwashing — The Most Important Safety Practice</div>
+    <div style="background:#f0fff4; border:1.5px solid #80c090; border-radius:3px; padding:10px 12px; font-size:0.8rem; color:#0a3a14; margin-bottom:10px;">
+      <strong>Wash hands for a minimum of 20 seconds with soap and warm water:</strong><br><br>
+      ☐ &nbsp;Before starting any food preparation<br>
+      ☐ &nbsp;After handling raw meat, poultry, or seafood<br>
+      ☐ &nbsp;After touching your face, hair, or phone<br>
+      ☐ &nbsp;After using the restroom<br>
+      ☐ &nbsp;After handling garbage or cleaning chemicals<br>
+      ☐ &nbsp;After sneezing, coughing, or blowing your nose<br>
+      ☐ &nbsp;After changing tasks (e.g. raw to cooked protein)<br>
+      ☐ &nbsp;After handling money or touching non-food surfaces<br><br>
+      <strong>Gloves do not replace handwashing.</strong> Wash hands before putting gloves on. Change gloves between tasks — do not re-use a glove after touching a contaminated surface.
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Personal Hygiene Requirements</div>
+    <table class="item-table">
+      <thead><tr><th>Requirement</th><th>Standard</th></tr></thead>
+      <tbody>
+        <tr><td><div class="item-name">Nails</div></td><td>Short, clean, unpolished. No artificial nails in kitchen.</td></tr>
+        <tr><td><div class="item-name">Jewelry</div></td><td>No rings, bracelets, or dangling jewelry. Single stud earrings permitted.</td></tr>
+        <tr><td><div class="item-name">Hair</div></td><td>Tied back and restrained at all times. No loose hair in kitchen.</td></tr>
+        <tr><td><div class="item-name">Illness</div></td><td>Do not work if experiencing vomiting, diarrhea, jaundice, or open infected wounds. Notify manager immediately.</td></tr>
+        <tr><td><div class="item-name">Cuts & Wounds</div></td><td>All cuts must be covered with a bandage AND a colored glove (so it's visible if it falls in food).</td></tr>
+        <tr><td><div class="item-name">Eating & Drinking</div></td><td>No eating in food prep areas. Beverages must be in a covered container with a lid and straw.</td></tr>
+        <tr><td><div class="item-name">Phone Use</div></td><td>No phone use during food prep. Phones must be stored away from food contact surfaces.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 6: CHEMICAL SAFETY -->
+<div class="section-label dark" style="background:#2a2a6a;">6. Chemical Safety & Cleaning Standards</div>
+<div class="two-col avoid-break">
+  <div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Read Labels Before Use</strong><p>Never use a cleaning chemical without reading the label first. Know the dilution ratio, required PPE, and proper application method for every chemical you use.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Never Mix Chemicals</strong><p>Mixing cleaning chemicals — particularly bleach with ammonia or acid-based cleaners — creates toxic gases. Always use one product at a time and rinse thoroughly between applications.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Label All Chemical Containers</strong><p>Never transfer chemicals to unlabeled spray bottles. All chemical containers must be labeled with the product name and dilution ratio at all times.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Store Chemicals Separately</strong><p>All cleaning chemicals must be stored below and away from food, food contact surfaces, and food storage areas. Chemicals and food must never share a shelf.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>Sanitizer Concentration</strong><p>Sanitizer solution must be tested with test strips before each service period. Concentration must be within the correct range — too weak doesn't sanitize, too strong is a hazard. Log test results.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">3-Compartment Sink Procedure</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Wash</strong><p>Hot water (110°F+) with dish soap. Scrub all food residue from surfaces.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Rinse</strong><p>Clean warm water. Remove all soap and food residue completely.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Sanitize</strong><p>Approved sanitizer solution at correct concentration. Submerge or coat all surfaces. Allow to air dry — do not towel dry sanitized items.</p></div></li>
+    </ul>
+    <div class="alert alert-info" style="margin-top:8px;">
+      <span class="icon">ℹ️</span>
+      <span>SDS (Safety Data Sheets) for all chemicals used in this kitchen are kept on file. You have the right to access these at any time. Ask your manager for the SDS binder location.</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7: SLIP, TRIP & FALL -->
+<div class="section-label dark" style="background:#2a2a6a;">7. Slip, Trip & Fall Prevention</div>
+<div class="two-col avoid-break">
+  <div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Clean Spills Immediately</strong><p>Any liquid spill on the floor is a slip hazard. Stop what you're doing and clean it up or place a wet floor sign before continuing other tasks.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Use Wet Floor Signs</strong><p>Place wet floor signs any time you mop or clean the floor. Leave them up until the floor is completely dry.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Keep Walkways Clear</strong><p>No boxes, equipment, or obstacles in kitchen walkways or near emergency exits at any time.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Walk — Never Run</strong><p>In a kitchen environment, running causes collisions with hot equipment and other staff carrying hot food. Walk at all times.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>Announce Hot Items in Transit</strong><p>Always call "behind" or "hot behind" when carrying hot food or equipment behind another person. Call "corner" when approaching a blind corner.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">6</div><div class="step-content"><strong>Anti-Fatigue Mats</strong><p>Use anti-fatigue mats at your station. Check that mats lay flat with no curled edges — a curled mat is a trip hazard.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">7</div><div class="step-content"><strong>Carry Loads Safely</strong><p>Bend at the knees when lifting heavy items. Never lift more than you can safely carry. Use a cart for large or heavy loads. Ask for help — lifting injuries are serious.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">8</div><div class="step-content"><strong>Grease Trap & Floor Drain Maintenance</strong><p>Keep floor drains clear and grease traps emptied regularly. Overflowing drains and grease on floors are both slip hazards and health code violations.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 8: KNIFE & EQUIPMENT SAFETY -->
+<div class="section-label dark" style="background:#333;">8. Knife & Equipment Safety</div>
+<div class="two-col avoid-break">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Knife Safety Rules</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>A Sharp Knife is a Safe Knife</strong><p>Dull knives require more force and are more likely to slip. Keep knives sharp and honed. Report dull knives to a manager.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Cut Away from Your Body</strong><p>Always direct the blade away from yourself and others. Curl your fingertips under in a "bear claw" grip to protect your fingers.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Never Leave Knives in a Sink</strong><p>A knife in soapy water is invisible and dangerous. Wash knives separately, immediately, and store them in a knife block or magnetic strip.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Carry Knives Point Down</strong><p>When transporting a knife, hold it at your side with the blade pointing down and edge facing back. Announce your movement.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">5</div><div class="step-content"><strong>If a Knife Falls — Let It Go</strong><p>Never try to catch a falling knife. Step back and let it fall. A cut hand is worse than a blade on the floor.</p></div></li>
+    </ul>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">Equipment Safety Rules</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Never Operate Unfamiliar Equipment</strong><p>Do not operate any piece of equipment you have not been trained on. Ask your trainer or manager before using any new equipment.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Machine Guards Must Be in Place</strong><p>Never operate slicers, mixers, or other equipment with guards removed. Guards are there to prevent serious injury.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Lockout / Tagout</strong><p>Before cleaning any equipment with moving parts (slicer, mixer, meat grinder), turn it off, unplug it, and confirm it cannot be turned on before placing hands near blades or moving parts.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Report Damaged Equipment Immediately</strong><p>Frayed cords, cracked handles, loose guards, or malfunctioning switches must be reported immediately. Tag the equipment "Out of Service" and do not use it until repaired.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 9: INCIDENT REPORTING -->
+<div class="section-label dark" style="background:#333;">9. Incident Reporting</div>
+<div class="alert alert-info avoid-break">
+  <span class="icon">📋</span>
+  <span><strong>All workplace injuries, near-misses, and unsafe conditions must be reported immediately</strong> to the manager on duty — no matter how minor they seem. Early reporting protects you, your coworkers, and the business.</span>
+</div>
+<div class="two-col avoid-break">
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">What Must Be Reported</div>
+    <div class="checklist-grid" style="grid-template-columns:1fr;">
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any burn, cut, laceration, or injury — no matter how minor</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any slip, trip, or fall — even if no injury occurred</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any near-miss (close call that could have caused injury)</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any malfunctioning or damaged equipment</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any unsafe condition observed in the kitchen</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any food safety concern (temperature violation, contamination)</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">Any chemical spill or exposure</div></div>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:#333; margin-bottom:8px;">After an Injury — Steps</div>
+    <ul class="step-list">
+      <li class="step-item"><div class="step-num sn-dark">1</div><div class="step-content"><strong>Ensure Safety First</strong><p>Move away from hazard. Secure the area if needed to protect others.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">2</div><div class="step-content"><strong>Provide First Aid</strong><p>Use the first aid kit for minor injuries. Call 911 for serious injuries. Do not delay emergency care to complete paperwork.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">3</div><div class="step-content"><strong>Report to Manager on Duty</strong><p>Notify your manager immediately — verbally, then in writing via the incident report form.</p></div></li>
+      <li class="step-item"><div class="step-num sn-dark">4</div><div class="step-content"><strong>Complete Incident Report</strong><p>Document what happened, when, where, who was involved, and what caused it. Be specific. Your manager will retain this on file.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SAFETY SIGN-OFF -->
+<div style="border:2px solid #8B1A1A; border-radius:4px; padding:16px; margin-top:18px;" class="avoid-break">
+  <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:2px; color:#8B1A1A; margin-bottom:12px; border-bottom:1px solid #ddd; padding-bottom:8px;">Safety Standards Acknowledgment & Sign-Off</h4>
+  <div style="font-size:0.82rem; color:#333; margin-bottom:14px; line-height:1.6;">
+    By signing below, I confirm that I have <strong>read, understood, and received training on</strong> all safety standards contained in this section, including: Personal Protective Equipment, Fire Safety, Burn Prevention, Food Safety & Temperature Standards, Personal Hygiene, Chemical Safety, Slip/Trip/Fall Prevention, Knife & Equipment Safety, and Incident Reporting procedures.
+  </div>
+  <div class="signoff-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Trainee Signature</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Printed Name</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Date</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Trainer / Manager Signature</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Printed Name</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Date</div>
+    </div>
+  </div>
+  <div style="margin-top:14px;">
+    <div class="sig-label" style="margin-bottom:6px;">Additional Notes / Comments</div>
+    <div class="notes-area"></div>
+    <div class="notes-area"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SIGN-OFF — page break
+══════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<div class="signoff-section avoid-break">
+  <h2>Training Sign-Off & Certification</h2>
+
+  <div class="signoff-grid">
+    <div class="signoff-card">
+      <h4>🔥 Fryer Station</h4>
+      <div class="signoff-check"><div class="check-box"></div><span>Cook times & product knowledge</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Startup & preheat procedure</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Oil filtration & daily cleaning</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Safety & fire protocol</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Observed working solo on station</span></div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Trainer Initials & Date</div>
+    </div>
+
+    <div class="signoff-card">
+      <h4>🍕 Oven & Hot Station</h4>
+      <div class="signoff-check"><div class="check-box"></div><span>Cook times, pizza & oven knowledge</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Hot well temps & procedures</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Startup & shutdown procedure</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Safety & burn prevention</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Observed working solo on station</span></div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Trainer Initials & Date</div>
+    </div>
+
+    <div class="signoff-card">
+      <h4>🥩 Grill & Flattop Station</h4>
+      <div class="signoff-check"><div class="check-box"></div><span>Burger temps & cook to order</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Chicken 165°F protocol</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Seafood visual cues</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Butter wheel setup & technique</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Startup, cleaning & safety</span></div>
+      <div class="signoff-check"><div class="check-box"></div><span>Observed working solo on station</span></div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Trainer Initials & Date</div>
+    </div>
+  </div>
+
+  <div class="signoff-card full" style="border:1.5px solid #ddd; border-radius:3px; padding:12px 14px;">
+    <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:1.5px; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">✅ Final Certification</h4>
+    <div class="final-grid">
+      <div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Trainee Signature</div>
+      </div>
+      <div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date Completed</div>
+      </div>
+      <div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Manager / Head Chef Sign-Off</div>
+      </div>
+      <div>
+        <div class="sig-line"></div>
+        <div class="sig-label">Date Certified</div>
+      </div>
+    </div>
+    <div class="notes-line" style="margin-top:16px;">
+      <div class="sig-label" style="margin-bottom:6px;">Notes / Areas for Improvement</div>
+      <div class="notes-area"></div>
+      <div class="notes-area"></div>
+      <div class="notes-area"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE FOOTER (print only) -->
+<div class="page-footer">
+  <span>Coach's Pub & Grill — Kitchen Training Log</span>
+  <span>Fryer 375°F | Pizza Oven 450°F | Hot Wells 140°F+ | Chicken Always 165°F</span>
+  <span>For kitchen staff use only</span>
+</div>
+
+</div><!-- end page-wrapper -->
+</body>
+</html>
